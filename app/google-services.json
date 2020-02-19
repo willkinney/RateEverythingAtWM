@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "454102151973-mt8era70agtkp2o6odqcthct929p7elj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.cs.wm.rateeverythingatwm",
+            "certificate_hash": "d79db84240ba36f89d61d277b7db1b0821dcaab0"
+          }
+        },
+        {
           "client_id": "454102151973-8rva2v9e0opjhc3o997gumtgj2f3j29k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
