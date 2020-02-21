@@ -25,24 +25,5 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void postToDB(View view) {
-        String testTitle = "This is the test title";
-        String testBody = "This is the test text for the body";
 
-        Map<String, Object> dataToSave = new HashMap<String, Object>();
-
-        dataToSave.put("Title", testTitle);
-        dataToSave.put("Body", testBody);
-        mDocRef.set(dataToSave).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Success", "Successfully pushed");
-                } else {
-                    Log.d("Fail", "Failed to push");
-
-                }
-            }
-        });
-    }
 }
