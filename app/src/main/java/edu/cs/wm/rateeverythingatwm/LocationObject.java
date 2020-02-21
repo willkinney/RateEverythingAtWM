@@ -21,7 +21,7 @@ public class LocationObject {
     }
 
     public LocationObject(String title, String subject, String review, Image image, int rating,
-                          ArrayList<String> comments, String category){
+                          ArrayList<String> comments){
         this.subject = subject;
         this.title = title;
         this.review = review;
