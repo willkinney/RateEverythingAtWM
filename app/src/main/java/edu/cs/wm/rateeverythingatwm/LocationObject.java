@@ -1,6 +1,5 @@
 package edu.cs.wm.rateeverythingatwm;
 
-import android.location.Location;
 import android.media.Image;
 import android.util.Log;
 
@@ -8,9 +7,9 @@ import java.util.ArrayList;
 
 public class LocationObject {
 
-    private String name;
+    private String subject;
+    private String title;
     private String review;
-    private Location location;
     private Image image;
     private int rating;
     private ArrayList<String> comments;
@@ -21,26 +20,24 @@ public class LocationObject {
         Log.v(tag, "Location Object");
     }
 
-    public LocationObject(String name, String review, Location location, Image image, int rating,
-                          ArrayList comments){
-        this.name = name;
+    public LocationObject(String title, String subject, String review, Image image, int rating,
+                          ArrayList<String> comments, String category){
+        this.subject = subject;
+        this.title = title;
         this.review = review;
-        this.location = location;
         this.image = image;
         this.rating = rating;
         this.comments = comments;
     }
 
-    public String getName(){
-        return this.name;
+    public String getSubject(){
+        return this.subject;
     }
+
+    public String getTitle() { return this.title; }
 
     public String getReview(){
         return this.review;
-    }
-
-    public Location getLocation(){
-        return this.location;
     }
 
     public Image getImage(){
@@ -51,7 +48,7 @@ public class LocationObject {
         return this.rating;
     }
 
-    public ArrayList getComments(){
+    public ArrayList<String> getComments(){
         return this.comments;
     }
 
