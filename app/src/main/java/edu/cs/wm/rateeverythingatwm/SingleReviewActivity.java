@@ -43,7 +43,7 @@ public class SingleReviewActivity extends AppCompatActivity {
 
 
     public void viewReviews(View view) {
-        Intent intent = new Intent(this, ViewReviewsActivity.class);
+        Intent intent = new Intent(this, Reviews_Activity.class);
         startActivity(intent);
     }
 

@@ -85,6 +85,11 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                         Log.w("No", "Error adding document", e);
                     }
                 });
+
+//        Intent postedIntent = new Intent(this, SingleReviewActivity);
+        Bundle bundle = new Bundle();
+//        bundle.putSerializable("REVIEW", review);
+
     }
 
     public void takePic(View view){
