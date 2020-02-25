@@ -34,6 +34,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     private CollectionReference mDocRef = db.collection("reviews");
     private ImageView imageView;
     private Button picButton;
+    private Button chooseButton;
 
 
 
@@ -44,6 +45,8 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_post_review);
         imageView = (ImageView) findViewById(R.id.ImageView01);
         picButton = (Button) findViewById(R.id.camerabutton);
+        chooseButton = (Button) findViewById(R.id.pickbutton);
+        chooseButton.setOnClickListener(this);
         picButton.setOnClickListener(this);
 
     }
@@ -99,6 +102,9 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.camerabutton:
                 takePic(view);
+
+            case R.id.pickbutton:
+                pickPic(view);
         }
     }
 

@@ -77,9 +77,17 @@
         android:onClick="takePic"
         android:text = "take photo" />
 
+    <Button
+        android:id="@+id/pickbutton"
+        android:layout_width="122dp"
+        android:layout_height="67dp"
+        android:onClick="pickPic"
+        android:text="Pick Photo" />
+
     <ImageView
         android:id="@+id/ImageView01"
         android:layout_width="122dp"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_launcher_foreground" />
+
 </LinearLayout>
