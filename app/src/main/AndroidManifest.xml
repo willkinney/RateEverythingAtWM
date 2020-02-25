@@ -24,6 +24,7 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".PostReviewActivity"></activity>
         <activity android:name=".SingleReviewActivity"></activity>
+        <activity android:name=".Reviews_Activity"></activity>
     </application>
 
 </manifest>
