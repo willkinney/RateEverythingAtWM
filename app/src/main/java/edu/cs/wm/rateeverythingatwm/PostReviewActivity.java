@@ -1,6 +1,5 @@
 package edu.cs.wm.rateeverythingatwm;
 
-import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,17 +10,13 @@ import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PostReviewActivity extends AppCompatActivity {
 
@@ -46,15 +41,13 @@ public class PostReviewActivity extends AppCompatActivity {
         String titleText = titleEditText.getText().toString();
         String reviewText = reviewEditText.getText().toString();
 
-        int rating = 5;
+        int rating = ratingSeekbar.getProgress();
 
-        Image placeholder = null;
+        Image image = null;
 
         ArrayList<String> comments = new ArrayList<String>();
-//        comments.add("Comment1");
-//        comments.add("Comment2");
 
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, placeholder, rating, comments);
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, image, rating, comments);
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
