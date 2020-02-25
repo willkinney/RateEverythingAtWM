@@ -1,5 +1,6 @@
 package edu.cs.wm.rateeverythingatwm;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,6 +55,7 @@ public class PostReviewActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("Yes", "DocumentSnapshot added with ID: " + documentReference.getId());
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -62,6 +64,13 @@ public class PostReviewActivity extends AppCompatActivity {
                         Log.w("No", "Error adding document", e);
                     }
                 });
+
+        // After posting a review, create a new intent to bring the user to the review that they just posted
+        // TODO Implement functionality for viewing the review that was just posted
+        // Intent postedIntent = new Intent(this, SingleReviewActivity.class);
+        Intent postedIntent = new Intent(this, MainActivity.class); // TEMPORARY brings you back to main screen until SingleReview is implemented
+        startActivity(postedIntent);
+
     }
 
 }
