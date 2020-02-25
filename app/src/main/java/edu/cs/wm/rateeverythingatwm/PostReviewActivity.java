@@ -40,14 +40,14 @@ public class PostReviewActivity extends AppCompatActivity {
         String subjectText = subjectEditText.getText().toString();
         String titleText = titleEditText.getText().toString();
         String reviewText = reviewEditText.getText().toString();
+        String imageURL = null;
 
         int rating = ratingSeekbar.getProgress();
 
-        Image image = null;
 
         ArrayList<String> comments = new ArrayList<String>();
 
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, image, rating, comments);
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL, rating, comments);
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

@@ -10,7 +10,7 @@ public class LocationObject {
     private String subject;
     private String title;
     private String review;
-    private Image image;
+    private String imageURL;
     private int rating;
     private ArrayList<String> comments;
     String tag = "LOCATION OBJECT";
@@ -20,12 +20,12 @@ public class LocationObject {
         Log.v(tag, "Location Object");
     }
 
-    public LocationObject(String title, String subject, String review, Image image, int rating,
+    public LocationObject(String title, String subject, String review, String imageURL, int rating,
                           ArrayList<String> comments){
         this.subject = subject;
         this.title = title;
         this.review = review;
-        this.image = image;
+        this.imageURL = imageURL;
         this.rating = rating;
         this.comments = comments;
     }
@@ -40,8 +40,8 @@ public class LocationObject {
         return this.review;
     }
 
-    public Image getImage(){
-        return this.image;
+    public String getImage() {
+        return this.imageURL;
     }
 
     public int getRating(){
