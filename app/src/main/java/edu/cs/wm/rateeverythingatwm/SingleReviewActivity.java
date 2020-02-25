@@ -1,5 +1,6 @@
 package edu.cs.wm.rateeverythingatwm;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,11 @@ public class SingleReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_review);
     }
+
+    Intent incomingIntent = getIntent();
+    Bundle incomingBundle = incomingIntent.getExtras();
+
+    LocationObject wholeReview = (LocationObject) incomingBundle.getSerializable("REVIEW");
 
 
 }
