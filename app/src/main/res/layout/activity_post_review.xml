@@ -17,13 +17,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Subject" />
+        android:hint="Subject" />
 
     <TextView
         android:id="@+id/reviewTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title" />
+        android:text="Add a title for your review:" />
 
     <EditText
         android:id="@+id/titleEditText"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Title" />
+        android:hint="Title" />
 
     <TextView
         android:id="@+id/reviewTextView"
@@ -44,14 +44,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="Review" />
 
     <TextView
-        android:id="@+id/rankingSeekBar"
+        android:id="@+id/ratingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ranking" />
+        android:text="Rating" />
 
     <SeekBar
         android:id="@+id/ratingSeekBar"
@@ -59,7 +58,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="10"
+        android:min="1"
         android:progress="5" />
+
+    <TextView
+        android:id="@+id/photoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photo:"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/ImageView01"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <Button
+        android:id="@+id/takePhotoButton"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:adjustViewBounds="true"
+        android:onClick="takePic"
+        android:text = "take photo" />
+
+    <Button
+        android:id="@+id/chooseFromGalleryButton"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:onClick="pickPic"
+        android:text="Choose a photo from your gallery" />
+
 
     <Button
         android:id="@+id/postButton"
@@ -67,27 +97,5 @@
         android:layout_height="wrap_content"
         android:onClick="postReview"
         android:text="Post Review!" />
-
-
-    <Button
-        android:id="@+id/camerabutton"
-        android:layout_width="119dp"
-        android:layout_height="78dp"
-        android:adjustViewBounds="true"
-        android:onClick="takePic"
-        android:text = "take photo" />
-
-    <Button
-        android:id="@+id/pickbutton"
-        android:layout_width="122dp"
-        android:layout_height="67dp"
-        android:onClick="pickPic"
-        android:text="Pick Photo" />
-
-    <ImageView
-        android:id="@+id/ImageView01"
-        android:layout_width="122dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
 
 </LinearLayout>

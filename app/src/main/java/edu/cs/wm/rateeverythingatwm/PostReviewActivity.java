@@ -1,8 +1,6 @@
 package edu.cs.wm.rateeverythingatwm;
 
 import android.content.Intent;
-import android.location.Location;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,25 +22,25 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PostReviewActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference mDocRef = db.collection("reviews");
-    private ImageView imageView;
+    private ImageView thumbnailImageView;
     private Button picButton;
     private Button chooseButton;
+    private TextView photoLabelTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_review);
 
-        imageView = (ImageView) findViewById(R.id.ImageView01);
-        picButton = (Button) findViewById(R.id.camerabutton);
-        chooseButton = (Button) findViewById(R.id.pickbutton);
+        thumbnailImageView = (ImageView) findViewById(R.id.ImageView01);
+        picButton = (Button) findViewById(R.id.takePhotoButton);
+        chooseButton = (Button) findViewById(R.id.chooseFromGalleryButton);
+        photoLabelTextView = (TextView) findViewById(R.id.photoLabel);
 
         chooseButton.setOnClickListener(this);
         picButton.setOnClickListener(this);
@@ -99,11 +98,13 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.camerabutton:
+            case R.id.takePhotoButton:
                 takePic(view);
+                break;
 
-            case R.id.pickbutton:
+            case R.id.chooseFromGalleryButton:
                 pickPic(view);
+                break;
         }
     }
 
@@ -113,14 +114,17 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
             case 0:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = imageReturnedIntent.getData();
-                    imageView.setImageURI(selectedImage);
+                    thumbnailImageView.setImageURI(selectedImage);
+                    photoLabelTextView.setVisibility(View.VISIBLE);
+                    thumbnailImageView.setVisibility(View.VISIBLE);
                 }
-
                 break;
             case 1:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = imageReturnedIntent.getData();
-                    imageView.setImageURI(selectedImage);
+                    thumbnailImageView.setImageURI(selectedImage);
+                    photoLabelTextView.setVisibility(View.VISIBLE);
+                    thumbnailImageView.setVisibility(View.VISIBLE);
                 }
                 break;
         }
