@@ -20,27 +20,49 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
 public class PostReviewActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference mDocRef = db.collection("reviews");
+    private FirebaseFirestore db;
+    private CollectionReference mDocRef;
+
+    private StorageReference mStorageRef;
+
     private ImageView thumbnailImageView;
     private Button picButton;
     private Button chooseButton;
     private TextView photoLabelTextView;
+    private EditText subjectEditText;
+    private EditText titleEditText;
+    private EditText reviewEditText;
+    private SeekBar ratingSeekbar;
+
+    private Uri selectedImage = null;
+    private String image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_review);
 
+        db = FirebaseFirestore.getInstance();
+        mDocRef = db.collection("reviews");
+
+        mStorageRef = FirebaseStorage.getInstance().getReference("images/");
+
         thumbnailImageView = (ImageView) findViewById(R.id.ImageView01);
         picButton = (Button) findViewById(R.id.takePhotoButton);
         chooseButton = (Button) findViewById(R.id.chooseFromGalleryButton);
         photoLabelTextView = (TextView) findViewById(R.id.photoLabel);
+        subjectEditText = (EditText) findViewById(R.id.subjectEditText);
+        titleEditText = (EditText) findViewById(R.id.titleEditText);
+        reviewEditText = (EditText) findViewById(R.id.reviewEditText);
+        ratingSeekbar = (SeekBar) findViewById(R.id.ratingSeekBar);
 
         chooseButton.setOnClickListener(this);
         picButton.setOnClickListener(this);
@@ -48,20 +70,36 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void postReview(View view) {
-        EditText subjectEditText = (EditText) findViewById(R.id.subjectEditText);
-        EditText titleEditText = (EditText) findViewById(R.id.titleEditText);
-        EditText reviewEditText = (EditText) findViewById(R.id.reviewEditText);
-        SeekBar ratingSeekbar = (SeekBar) findViewById(R.id.ratingSeekBar);
-
         String subjectText = subjectEditText.getText().toString();
         String titleText = titleEditText.getText().toString();
         String reviewText = reviewEditText.getText().toString();
 
         int rating = ratingSeekbar.getProgress();
 
-        String placeholder = null;
+        StorageReference ref = mStorageRef.child("images/newfile.png");
+        if (selectedImage != null) {
+            ref.putFile(selectedImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a URL to the uploaded content
+                            Log.v("success", "succ");
+                            image = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            // ...
+                            Log.v("failure999", "damn999");
+
+                        }
+                    });
+        }
+
         ArrayList<String> comments = new ArrayList<String>();
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, placeholder, rating, comments);
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, image, rating, comments);
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -113,7 +151,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         switch(requestCode) {
             case 0:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
+                    selectedImage = imageReturnedIntent.getData();
                     thumbnailImageView.setImageURI(selectedImage);
                     photoLabelTextView.setVisibility(View.VISIBLE);
                     thumbnailImageView.setVisibility(View.VISIBLE);
@@ -121,7 +159,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                 break;
             case 1:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
+                    selectedImage = imageReturnedIntent.getData();
                     thumbnailImageView.setImageURI(selectedImage);
                     photoLabelTextView.setVisibility(View.VISIBLE);
                     thumbnailImageView.setVisibility(View.VISIBLE);
