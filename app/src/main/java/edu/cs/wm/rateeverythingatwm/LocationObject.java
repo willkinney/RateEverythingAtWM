@@ -3,9 +3,10 @@ package edu.cs.wm.rateeverythingatwm;
 import android.media.Image;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LocationObject {
+public class LocationObject implements Serializable {
 
     private String subject;
     private String title;
@@ -13,7 +14,7 @@ public class LocationObject {
     private String imageURL;
     private int rating;
     private ArrayList<String> comments;
-    String tag = "LOCATION OBJECT";
+    String tag = "LOCATION_OBJECT";
 
 
     public LocationObject(){

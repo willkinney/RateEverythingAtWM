@@ -16,10 +16,8 @@ import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,16 +34,15 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     private Button picButton;
     private Button chooseButton;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_review);
+
         imageView = (ImageView) findViewById(R.id.ImageView01);
         picButton = (Button) findViewById(R.id.camerabutton);
         chooseButton = (Button) findViewById(R.id.pickbutton);
+
         chooseButton.setOnClickListener(this);
         picButton.setOnClickListener(this);
 
@@ -55,21 +52,16 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         EditText subjectEditText = (EditText) findViewById(R.id.subjectEditText);
         EditText titleEditText = (EditText) findViewById(R.id.titleEditText);
         EditText reviewEditText = (EditText) findViewById(R.id.reviewEditText);
-
         SeekBar ratingSeekbar = (SeekBar) findViewById(R.id.ratingSeekBar);
 
         String subjectText = subjectEditText.getText().toString();
         String titleText = titleEditText.getText().toString();
         String reviewText = reviewEditText.getText().toString();
 
-        int rating = 5;
+        int rating = ratingSeekbar.getProgress();
 
         String placeholder = null;
-
         ArrayList<String> comments = new ArrayList<String>();
-//        comments.add("Comment1");
-//        comments.add("Comment2");
-
         LocationObject review = new LocationObject(titleText, subjectText, reviewText, placeholder, rating, comments);
 
         mDocRef.add(review)
@@ -86,9 +78,11 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     }
                 });
 
-//        Intent postedIntent = new Intent(this, SingleReviewActivity);
+        Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
         Bundle bundle = new Bundle();
-//        bundle.putSerializable("REVIEW", review);
+        bundle.putSerializable("REVIEW", review);
+        postedIntent.putExtras(bundle);
+        startActivity(postedIntent);
 
     }
 

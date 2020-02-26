@@ -1,7 +1,9 @@
 package edu.cs.wm.rateeverythingatwm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,27 +15,31 @@ public class SingleReviewActivity extends AppCompatActivity {
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
-
-    Intent incomingIntent = getIntent();
-    Bundle incomingBundle = incomingIntent.getExtras();
-
-    LocationObject wholeReview = (LocationObject) incomingBundle.getSerializable("REVIEW");
-
-    TextView subjectTextView = (TextView) findViewById(R.id.subjectText);
-    TextView titleTextView = (TextView) findViewById(R.id.titleText);
-    TextView reviewTextView = (TextView) findViewById(R.id.reviewText);
-    TextView ratingView = (TextView) findViewById(R.id.ratingText);
-
-
-    String subjectText = wholeReview.getSubject();
-    String titleText = wholeReview.getTitle();
-    String reviewText = wholeReview.getReview();
-    String rating = String.valueOf(wholeReview.getRating());
+    private TextView subjectTextView;
+    private TextView titleTextView;
+    private TextView reviewTextView;
+    private TextView ratingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_review);
+        setContentView(R.layout.activity_single_review);
+        subjectTextView = (TextView) findViewById(R.id.subjectText);
+        titleTextView = (TextView) findViewById(R.id.titleText);
+        reviewTextView = (TextView) findViewById(R.id.reviewText);
+        ratingView = (TextView) findViewById(R.id.ratingText);
+
+        setUpReview();
+    }
+
+    private void setUpReview() {
+        Bundle incomingBundle = getIntent().getExtras();
+        LocationObject wholeReview = (LocationObject) incomingBundle.getSerializable("REVIEW");
+
+        String subjectText = wholeReview.getSubject();
+        String titleText = wholeReview.getTitle();
+        String reviewText = wholeReview.getReview();
+        String rating = String.valueOf(wholeReview.getRating());
 
         subjectTextView.setText(subjectText);
         titleTextView.setText(titleText);
