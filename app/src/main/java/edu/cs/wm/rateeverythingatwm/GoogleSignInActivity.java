@@ -47,39 +47,31 @@ public class GoogleSignInActivity extends AppCompatActivity {
                     case R.id.signInButton:
                         signIn();
                         break;
-                    // ...
                 }
             }
         });
 
-
-        // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        // [END config_signin]
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
-
     }
 
-    // [START on_start_check_user]
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null)
-//            updateUI(currentUser);
+        if (currentUser != null) {
+            updateUI(currentUser);
+        }
     }
-    // [END on_start_check_user]
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d("Firebase", "firebaseAuthWithGoogle:" + acct.getId());
@@ -133,7 +125,7 @@ public class GoogleSignInActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LauncherActivity.class);
             startActivity(intent);
         } else {
             Log.w("GoogleSignIn", "Not logged in");

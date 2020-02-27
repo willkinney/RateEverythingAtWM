@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".LauncherActivity"
             android:exported="false"></activity>
         <activity
             android:name=".PostReviewActivity"
