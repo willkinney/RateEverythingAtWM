@@ -1,9 +1,7 @@
 package edu.cs.wm.rateeverythingatwm;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,7 +47,7 @@ public class SingleReviewActivity extends AppCompatActivity {
 
 
     public void viewReviews(View view) {
-        Intent intent = new Intent(this, Reviews_Activity.class);
+        Intent intent = new Intent(this, ViewReviewsActivity.class);
         startActivity(intent);
     }
 

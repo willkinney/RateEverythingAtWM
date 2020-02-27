@@ -21,7 +21,7 @@ import java.util.List;
 import android.widget.ArrayAdapter;
 
 
-public class Reviews_Activity extends AppCompatActivity {
+public class ViewReviewsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

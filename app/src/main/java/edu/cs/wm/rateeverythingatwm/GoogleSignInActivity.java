@@ -41,19 +41,19 @@ public class GoogleSignInActivity extends AppCompatActivity {
 
         signIn = findViewById(R.id.signInButton);
         signIn.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v){
-                                          switch (v.getId()) {
-                                              case R.id.signInButton:
-                                                  signIn();
-                                                  break;
-                                              // ...
-                                          }
-                                      }
-                                  });
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.signInButton:
+                        signIn();
+                        break;
+                    // ...
+                }
+            }
+        });
 
 
-                // [START config_signin]
+        // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -76,7 +76,8 @@ public class GoogleSignInActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+//        if (currentUser != null)
+//            updateUI(currentUser);
     }
     // [END on_start_check_user]
 
@@ -96,7 +97,7 @@ public class GoogleSignInActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LoginFail", "signInWithCredential:failure", task.getException());
-//                            updateUI(null);
+                            //                            updateUI(null);
                         }
 
                         // ...
@@ -130,9 +131,13 @@ public class GoogleSignInActivity extends AppCompatActivity {
     }
     // [END signin]
 
-    private void updateUI(FirebaseUser user){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Log.w("GoogleSignIn", "Not logged in");
+        }
     }
 
-    }
+}

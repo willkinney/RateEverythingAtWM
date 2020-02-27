@@ -13,18 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".NearYouActivity"></activity>
         <activity android:name=".GoogleSignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".PostReviewActivity"></activity>
-        <activity android:name=".SingleReviewActivity"></activity>
-        <activity android:name=".Reviews_Activity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".PostReviewActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".SingleReviewActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ViewReviewsActivity"
+            android:exported="false"></activity>
     </application>
 
 </manifest>
