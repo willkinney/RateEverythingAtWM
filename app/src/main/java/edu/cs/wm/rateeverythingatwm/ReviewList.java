@@ -2,33 +2,26 @@ package edu.cs.wm.rateeverythingatwm;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.storage.FirebaseStorage;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.widget.ArrayAdapter;
 
-
-public class ViewReviewsActivity extends AppCompatActivity {
+public class ReviewList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reviews_);
+        setContentView(R.layout.activity_review_list);
 
-        final ListView listview = (ListView) findViewById(R.id.listview);
+        final ListView listview = findViewById(R.id.listview);
         String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",

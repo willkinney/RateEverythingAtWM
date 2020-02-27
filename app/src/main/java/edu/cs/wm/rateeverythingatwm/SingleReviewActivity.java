@@ -22,10 +22,10 @@ public class SingleReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_review);
-        subjectTextView = (TextView) findViewById(R.id.subjectText);
-        titleTextView = (TextView) findViewById(R.id.titleText);
-        reviewTextView = (TextView) findViewById(R.id.reviewText);
-        ratingView = (TextView) findViewById(R.id.ratingText);
+        subjectTextView = findViewById(R.id.subjectText);
+        titleTextView = findViewById(R.id.titleText);
+        reviewTextView = findViewById(R.id.reviewText);
+        ratingView = findViewById(R.id.ratingText);
 
         setUpReview();
     }
@@ -47,7 +47,7 @@ public class SingleReviewActivity extends AppCompatActivity {
 
 
     public void viewReviews(View view) {
-        Intent intent = new Intent(this, ViewReviewsActivity.class);
+        Intent intent = new Intent(this, ReviewList.class);
         startActivity(intent);
     }
 
