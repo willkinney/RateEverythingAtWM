@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="launcherOnClick"
-            android:text="Write a new Review"
+            android:text="Write a new review"
             android:layout_below="@id/viewReviewsButton" />
 
         <Button
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="launcherOnClick"
-            android:text="View Reviews"
+            android:text="View all reviews"
             android:layout_below="@id/titleTextView" />
 
         <Button
