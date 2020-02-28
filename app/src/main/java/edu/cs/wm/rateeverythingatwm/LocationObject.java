@@ -1,6 +1,5 @@
 package edu.cs.wm.rateeverythingatwm;
 
-import android.media.Image;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -14,6 +13,7 @@ public class LocationObject implements Serializable {
     private String imageURL;
     private int rating;
     private ArrayList<String> comments;
+    private String author;
     String tag = "LOCATION_OBJECT";
 
 
@@ -22,13 +22,14 @@ public class LocationObject implements Serializable {
     }
 
     public LocationObject(String title, String subject, String review, String imageURL, int rating,
-                          ArrayList<String> comments){
+                          String author, ArrayList<String> comments) {
         this.subject = subject;
         this.title = title;
         this.review = review;
         this.imageURL = imageURL;
         this.rating = rating;
         this.comments = comments;
+        this.author = author;
     }
 
     public String getSubject(){
@@ -47,6 +48,10 @@ public class LocationObject implements Serializable {
 
     public int getRating(){
         return this.rating;
+    }
+
+    public String getAuthor() {
+        return this.author;
     }
 
     public ArrayList<String> getComments(){

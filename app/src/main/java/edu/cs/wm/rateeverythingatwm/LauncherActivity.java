@@ -19,13 +19,22 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
     }
 
-    public void createReview(View view) {
-        Intent intent = new Intent(this, PostReviewActivity.class);
-        startActivity(intent);
-    }
+    public void launcherOnClick(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.viewReviewsButton:
+                intent = new Intent(this, ReviewListActivity.class);
+                break;
 
-    public void viewReviews(View view) {
-        Intent intent = new Intent(this, ReviewListActivity.class);
-        startActivity(intent);
+            case R.id.viewProfileButton:
+                intent = new Intent(this, ProfileActivity.class);
+                break;
+
+            case R.id.newReviewButton:
+                intent = new Intent(this, PostReviewActivity.class);
+                break;
+        }
+        if (intent != null)
+            startActivity(intent);
     }
 }

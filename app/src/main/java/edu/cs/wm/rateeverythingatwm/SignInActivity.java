@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class GoogleSignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
 
     // [START declare_auth]
@@ -37,7 +37,7 @@ public class GoogleSignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_googlesignin);
+        setContentView(R.layout.activity_sign_in);
 
         signIn = findViewById(R.id.signInButton);
         signIn.setOnClickListener(new View.OnClickListener() {

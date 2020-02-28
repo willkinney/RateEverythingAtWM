@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,8 +32,10 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
     private FirebaseFirestore db;
     private CollectionReference mDocRef;
-
     private StorageReference mStorageRef;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     private ImageView thumbnailImageView;
     private Button picButton;
@@ -55,19 +59,29 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
         mStorageRef = FirebaseStorage.getInstance().getReference("images/");
 
-        thumbnailImageView = (ImageView) findViewById(R.id.ImageView01);
-        picButton = (Button) findViewById(R.id.takePhotoButton);
-        chooseButton = (Button) findViewById(R.id.chooseFromGalleryButton);
-        photoLabelTextView = (TextView) findViewById(R.id.photoLabel);
-        subjectEditText = (EditText) findViewById(R.id.subjectEditText);
-        titleEditText = (EditText) findViewById(R.id.titleEditText);
-        reviewEditText = (EditText) findViewById(R.id.reviewEditText);
-        ratingSeekbar = (SeekBar) findViewById(R.id.ratingSeekBar);
+        thumbnailImageView = findViewById(R.id.ImageView01);
+        picButton = findViewById(R.id.takePhotoButton);
+        chooseButton = findViewById(R.id.chooseFromGalleryButton);
+        photoLabelTextView = findViewById(R.id.photoLabel);
+        subjectEditText = findViewById(R.id.subjectEditText);
+        titleEditText = findViewById(R.id.titleEditText);
+        reviewEditText = findViewById(R.id.reviewEditText);
+        ratingSeekbar = findViewById(R.id.ratingSeekBar);
 
         chooseButton.setOnClickListener(this);
         picButton.setOnClickListener(this);
 
+        mAuth = FirebaseAuth.getInstance();
+
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        currentUser = mAuth.getCurrentUser();
+    }
+
 
     public void postReview(View view) {
         String subjectText = subjectEditText.getText().toString();
@@ -99,7 +113,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         }
 
         ArrayList<String> comments = new ArrayList<String>();
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, image, rating, comments);
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, image, rating, currentUser.getDisplayName().split(" ")[0], comments);
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
