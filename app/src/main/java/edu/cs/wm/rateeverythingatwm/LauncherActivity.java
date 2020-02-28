@@ -25,7 +25,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void viewReviews(View view) {
-        Intent intent = new Intent(this, ReviewList.class);
+        Intent intent = new Intent(this, ReviewListActivity.class);
         startActivity(intent);
     }
 }

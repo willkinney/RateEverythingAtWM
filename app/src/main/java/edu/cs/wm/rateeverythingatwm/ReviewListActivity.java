@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ReviewList extends AppCompatActivity {
+public class ReviewListActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private CollectionReference mDocRef;
@@ -50,7 +50,8 @@ public class ReviewList extends AppCompatActivity {
 //        for (int i = 0; i < values.length; ++i) {
 //            list.add(values[i]);
 //        }
-        db.collection("reviews")
+
+        reviewCollection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -59,7 +60,7 @@ public class ReviewList extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("tag", document.getId() + " => " + document.getData());
                                 list.add(document.getData());
-                                titlesList.add(document.getId());
+                                titlesList.add(document.getData().get("title").toString());
                             }
                         } else {
                             Log.d("tag", "Error getting documents: ", task.getException());

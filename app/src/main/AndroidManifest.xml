@@ -29,7 +29,7 @@
             android:name=".SingleReviewActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".ReviewList"
+            android:name=".ReviewListActivity"
             android:exported="false"></activity>
     </application>
 
