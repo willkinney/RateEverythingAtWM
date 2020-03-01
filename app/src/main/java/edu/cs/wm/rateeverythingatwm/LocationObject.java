@@ -18,7 +18,7 @@ public class LocationObject implements Serializable {
 
 
     public LocationObject(){
-        Log.v(tag, "Location Object");
+
     }
 
     public LocationObject(String title, String subject, String review, String imageURL, int rating,
@@ -42,7 +42,7 @@ public class LocationObject implements Serializable {
         return this.review;
     }
 
-    public String getImage() {
+    public String getImageURL() {
         return this.imageURL;
     }
 

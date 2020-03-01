@@ -3,13 +3,20 @@ package edu.cs.wm.rateeverythingatwm;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,96 +35,63 @@ public class ReviewListActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private CollectionReference mDocRef;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private String title, subject, review, imageURL, author;
+    private int rating;
+    private ArrayList<String> comments;
+    List<LocationObject> dataModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
 
+        mRecyclerView = findViewById(R.id.recycler_view);
         db = FirebaseFirestore.getInstance();
-        CollectionReference reviewCollection = db.collection("reviews");
+        mDocRef = db.collection("reviews");
 
-        final ListView listview = findViewById(R.id.listview);
-//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-//                "Android", "iPhone", "WindowsMobile" };
-
-        final ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        final ArrayList<String> titlesList = new ArrayList<>();
-
-//        for (int i = 0; i < values.length; ++i) {
-//            list.add(values[i]);
-//        }
-
-        reviewCollection
+        db.collection("reviews")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("tag", document.getId() + " => " + document.getData());
-                                list.add(document.getData());
-                                titlesList.add(document.getData().get("title").toString());
+                                Log.d("A", document.getId() + " => " + document.getData());
+                                LocationObject obj = document.toObject(LocationObject.class);
+                                dataModelList.add(obj);
                             }
+
                         } else {
-                            Log.d("tag", "Error getting documents: ", task.getException());
+                            Log.d("A", "Error getting documents: ", task.getException());
                         }
                     }
                 });
 
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, titlesList);
-        listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                titlesList.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
-            }
+        //List<LocationObject> dataModelList = new ArrayList<>();
+        //for (int i = 1; i <= 20; ++i) {
+        //    dataModelList.add(new LocationObject(title, subject, review, imageURL, rating, author, comments));
+        //}
 
-        });
+        // use this setting to improve performance if you know that changes
 
+        // in content do not change the layout size of the RecyclerView
 
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter and pass in our data model list
+
+        mAdapter = new MyAdapter(dataModelList, this);
+        mRecyclerView.setAdapter(mAdapter);
     }
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-    }
-
-
 }
 
 

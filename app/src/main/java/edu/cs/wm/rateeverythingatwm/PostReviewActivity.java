@@ -47,7 +47,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     private SeekBar ratingSeekbar;
 
     private Uri selectedImage = null;
-    private String image = null;
+    private String imageURL = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Get a URL to the uploaded content
                             Log.v("success", "succ");
-                            image = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                            imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -113,7 +113,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         }
 
         ArrayList<String> comments = new ArrayList<String>();
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, image, rating, currentUser.getDisplayName().split(" ")[0], comments);
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL, rating, currentUser.getDisplayName().split(" ")[0], comments);
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
