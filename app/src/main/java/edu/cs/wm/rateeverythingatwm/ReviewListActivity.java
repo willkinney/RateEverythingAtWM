@@ -38,6 +38,10 @@ public class ReviewListActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private String title, subject, review, imageURL, author;
+    private int rating;
+    private ArrayList<String> comments;
+    List<LocationObject> dataModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +49,32 @@ public class ReviewListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review_list);
 
         mRecyclerView = findViewById(R.id.recycler_view);
+        db = FirebaseFirestore.getInstance();
+        mDocRef = db.collection("reviews");
 
-        List<LocationObject> dataModelList = new ArrayList<>();
-        for (int i = 1; i <= 20; ++i) {
-            dataModelList.add(new LocationObject(null, null, null, null, 0, null, null));
-        }
+        db.collection("reviews")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("A", document.getId() + " => " + document.getData());
+                                LocationObject obj = document.toObject(LocationObject.class);
+                                dataModelList.add(obj);
+                            }
+
+                        } else {
+                            Log.d("A", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+        //List<LocationObject> dataModelList = new ArrayList<>();
+        //for (int i = 1; i <= 20; ++i) {
+        //    dataModelList.add(new LocationObject(title, subject, review, imageURL, rating, author, comments));
+        //}
 
         // use this setting to improve performance if you know that changes
 

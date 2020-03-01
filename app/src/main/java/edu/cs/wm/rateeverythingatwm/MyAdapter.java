@@ -1,6 +1,7 @@
 package edu.cs.wm.rateeverythingatwm;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collection;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -35,7 +41,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public void bindData(LocationObject dataModel, Context context) {
             cardImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_image));
             titleTextView.setText(dataModel.getTitle());
-            subTitleTextView.setText(dataModel.getAuthor());
+            String x = dataModel.getTitle();
+            subTitleTextView.setText(dataModel.getSubject());
         }
     }
 
