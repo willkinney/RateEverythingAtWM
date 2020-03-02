@@ -3,18 +3,9 @@ package edu.cs.wm.rateeverythingatwm;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,9 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class ReviewListActivity extends AppCompatActivity {
@@ -41,7 +30,7 @@ public class ReviewListActivity extends AppCompatActivity {
     private String title, subject, review, imageURL, author;
     private int rating;
     private ArrayList<String> comments;
-    List<LocationObject> dataModelList = new ArrayList<>();
+    List<LocationObject> dataModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +40,9 @@ public class ReviewListActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         db = FirebaseFirestore.getInstance();
         mDocRef = db.collection("reviews");
+        dataModelList = new ArrayList<>();
+
+        final Context context = this;
 
         db.collection("reviews")
                 .get()
@@ -67,6 +59,17 @@ public class ReviewListActivity extends AppCompatActivity {
                         } else {
                             Log.d("A", "Error getting documents: ", task.getException());
                         }
+                        mRecyclerView.setHasFixedSize(true);
+
+                        // use a linear layout manager
+
+                        mLayoutManager = new LinearLayoutManager(context);
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+
+                        // specify an adapter and pass in our data model list
+
+                        mAdapter = new MyAdapter(dataModelList, context);
+                        mRecyclerView.setAdapter(mAdapter);
                     }
                 });
 
@@ -79,7 +82,7 @@ public class ReviewListActivity extends AppCompatActivity {
         // use this setting to improve performance if you know that changes
 
         // in content do not change the layout size of the RecyclerView
-
+/*
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -91,6 +94,8 @@ public class ReviewListActivity extends AppCompatActivity {
 
         mAdapter = new MyAdapter(dataModelList, this);
         mRecyclerView.setAdapter(mAdapter);
+
+ */
     }
 }
 

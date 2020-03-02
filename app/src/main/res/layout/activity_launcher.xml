@@ -16,7 +16,16 @@
             android:text="Rate Everything at William &amp; Mary"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:padding="50sp" />
+            android:padding="50sp"
+            android:layout_above="@id/viewReviewsButton" />
+
+        <Button
+            android:id="@+id/viewReviewsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="launcherOnClick"
+            android:text="View all reviews"
+            android:layout_centerVertical="true" />
 
         <Button
             android:id="@+id/newReviewButton"
@@ -25,14 +34,6 @@
             android:onClick="launcherOnClick"
             android:text="Write a new review"
             android:layout_below="@id/viewReviewsButton" />
-
-        <Button
-            android:id="@+id/viewReviewsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="launcherOnClick"
-            android:text="View all reviews"
-            android:layout_below="@id/titleTextView" />
 
         <Button
             android:id="@+id/viewProfileButton"
