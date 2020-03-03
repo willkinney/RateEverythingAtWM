@@ -100,18 +100,18 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Log.v("ImageUpload", "Successfully uploaded image");
-                            imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+//                            imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                            Log.v("ImageUpload", "Successfully uploaded image with URL");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             Log.v("ImageUpload", "Failed to upload image");
-
                         }
                     });
         }
+
 
 
         LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL,
@@ -122,7 +122,8 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("ReviewUpload", "Review successfully uploaded with id: " + freshReviewID);
+                        Log.d("ReviewUpload", "Review successfully uploaded with id: "
+                                + freshReviewID);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

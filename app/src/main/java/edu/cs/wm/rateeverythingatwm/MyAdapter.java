@@ -1,7 +1,6 @@
 package edu.cs.wm.rateeverythingatwm;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.Collection;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<LocationObject> dataModelList;
     private Context mContext;
+//    private StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/");
+
 
     // View holder class whose objects represent each list item
 
@@ -39,7 +38,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
         public void bindData(LocationObject dataModel, Context context) {
-            cardImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_image));
+//            cardImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_image));
+            StorageReference reviewImageRef = FirebaseStorage.getInstance()
+                    .getReference().child("images/" + dataModel.getReviewID() + ".png");
+
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//            cardImageView.setImageBitmap(bitmap);
+            Glide.with(context /* context */)
+                    .load(reviewImageRef)
+                    .into(cardImageView);
             titleTextView.setText(dataModel.getTitle());
             String x = dataModel.getTitle();
             subTitleTextView.setText(dataModel.getSubject());
