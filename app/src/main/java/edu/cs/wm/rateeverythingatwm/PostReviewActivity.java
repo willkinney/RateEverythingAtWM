@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -28,8 +27,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.UUID;
 
-public class PostReviewActivity extends AppCompatActivity implements View.OnClickListener{
+public class PostReviewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore db;
     private CollectionReference mDocRef;
@@ -112,15 +112,30 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     });
         }
 
+        final String freshReviewID = UUID.randomUUID().toString();
+
         LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL,
                 rating, currentUser.getDisplayName().split(" ")[0], comments,
-                Calendar.getInstance().getTime().toString());
+                Calendar.getInstance().getTime().toString(), freshReviewID);
 
-        mDocRef.add(review)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//        mDocRef.add(review)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d("ReviewUpload", "Review added with ID: " + documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("ReviewUpload", "Error uploading review", e);
+//                    }
+//                });
+        mDocRef.document(freshReviewID).set(review)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("ReviewUpload", "Review added with ID: " + documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        Log.d("ReviewUpload", "Review successfully uploaded with id: " + freshReviewID);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -134,16 +149,19 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         Bundle bundle = new Bundle();
         bundle.putSerializable("REVIEW", review);
         postedIntent.putExtras(bundle);
+
         startActivity(postedIntent);
+
         finish();
+
     }
 
-    public void takePic(View view){
+    public void takePic(View view) {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePicture, 0);
     }
 
-    public void pickPic(View view){
+    public void pickPic(View view) {
         Intent getPicture = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(getPicture, 1);
@@ -163,9 +181,9 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
+        switch (requestCode) {
             case 0:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     selectedImage = imageReturnedIntent.getData();
                     thumbnailImageView.setImageURI(selectedImage);
                     photoLabelTextView.setVisibility(View.VISIBLE);
@@ -173,7 +191,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case 1:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     selectedImage = imageReturnedIntent.getData();
                     thumbnailImageView.setImageURI(selectedImage);
                     photoLabelTextView.setVisibility(View.VISIBLE);

@@ -13,6 +13,7 @@ public class LocationObject implements Serializable {
     private ArrayList<String> comments;
     private String author;
     private String timestamp;
+    private String reviewID;
     String tag = "LOCATION_OBJECT";
 
 
@@ -21,7 +22,7 @@ public class LocationObject implements Serializable {
     }
 
     public LocationObject(String title, String subject, String review, String imageURL, int rating,
-                          String author, ArrayList<String> comments, String timestamp) {
+                          String author, ArrayList<String> comments, String timestamp, String reviewID) {
         this.subject = subject;
         this.title = title;
         this.review = review;
@@ -30,6 +31,7 @@ public class LocationObject implements Serializable {
         this.comments = comments;
         this.author = author;
         this.timestamp = timestamp;
+        this.reviewID = reviewID;
     }
 
     public String getSubject(){
@@ -60,6 +62,10 @@ public class LocationObject implements Serializable {
 
     public String getTimestamp() {
         return this.timestamp;
+    }
+
+    public String getReviewID() {
+        return this.reviewID;
     }
 
 }
