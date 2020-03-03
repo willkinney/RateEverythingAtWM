@@ -125,6 +125,7 @@ public class SignInActivity extends AppCompatActivity {
         if (user != null) {
             Intent intent = new Intent(this, LauncherActivity.class);
             startActivity(intent);
+            finish();
         } else {
             Log.w("GoogleSignIn", "Not logged in");
         }

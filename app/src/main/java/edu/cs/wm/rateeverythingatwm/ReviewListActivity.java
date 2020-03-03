@@ -1,8 +1,10 @@
 package edu.cs.wm.rateeverythingatwm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,8 @@ public class ReviewListActivity extends AppCompatActivity {
     private ArrayList<String> comments;
     List<LocationObject> dataModelList;
 
+    private LocationObject clickedReview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,10 @@ public class ReviewListActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mDocRef = db.collection("reviews");
         dataModelList = new ArrayList<>();
+        clickedReview = new LocationObject("Example Title", "Example Subject",
+                "Example review text. More text. More and more.",
+                "exampleimageurl.jpg", 6,
+                "ExampleAuthor", null);
 
         final Context context = this;
 
@@ -72,8 +80,19 @@ public class ReviewListActivity extends AppCompatActivity {
                         mRecyclerView.setAdapter(mAdapter);
                     }
                 });
-        // TODO Where to put onClick for action button
-        // TODO how to get review to pass as intent when action button is clicked
+        // TODO how to get the specific review to pass as an intent when action button is clicked
+    }
+
+    public void goToReview(View view) {
+        switch (view.getId()) {
+            case R.id.showFullReviewButton:
+                Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("REVIEW", clickedReview);
+                postedIntent.putExtras(bundle);
+                startActivity(postedIntent);
+                break;
+        }
     }
 }
 
