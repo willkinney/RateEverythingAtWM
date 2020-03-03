@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,34 +113,49 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     });
         }
 
+        if(subjectText.equals("")){
+            Toast.makeText(getApplicationContext(), "Subject cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        else if(titleText.equals("")){
+            Toast.makeText(getApplicationContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        else if(reviewText.equals("")){
+            Toast.makeText(getApplicationContext(), "Review body cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        else if(selectedImage == null){
+            Toast.makeText(getApplicationContext(), "Choose or take an Image", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, hasImage,
-                rating, currentUser.getDisplayName().split(" ")[0], comments,
-                Calendar.getInstance().getTime().toString(), freshReviewID);
 
-        mDocRef.document(freshReviewID).set(review)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("ReviewUpload", "Review successfully uploaded with id: "
-                                + freshReviewID);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("ReviewUpload", "Error uploading review", e);
-                    }
-                });
+            LocationObject review = new LocationObject(titleText, subjectText, reviewText, hasImage,
+                    rating, currentUser.getDisplayName().split(" ")[0], comments,
+                    Calendar.getInstance().getTime().toString(), freshReviewID);
 
-        Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("REVIEW", review);
-        postedIntent.putExtras(bundle);
+            mDocRef.document(freshReviewID).set(review)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("ReviewUpload", "Review successfully uploaded with id: "
+                                    + freshReviewID);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("ReviewUpload", "Error uploading review", e);
+                        }
+                    });
 
-        startActivity(postedIntent);
+            Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("REVIEW", review);
+            postedIntent.putExtras(bundle);
 
-        finish();
+            startActivity(postedIntent);
+
+            finish();
+        }
 
     }
 
