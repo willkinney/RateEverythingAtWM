@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,31 +42,17 @@
             app:layout_constraintTop_toBottomOf="@+id/card_title" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/action_button_1"
+            android:id="@+id/showFullReviewButton"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="ACTION 1"
+            android:text="SHOW FULL REVIEW"
             android:textSize="15sp"
             android:textAppearance="
             @style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintStart_toStartOf="@+id/card_subtitle"
             app:layout_constraintTop_toBottomOf="@+id/card_subtitle" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/action_button_2"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:text="ACTION 2"
-            android:textSize="15sp"
-            android:textAppearance="
-            @style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintBottom_toTopOf="@+id/action_button_1"
-            app:layout_constraintStart_toEndOf="@+id/action_button_1"
-            app:layout_constraintTop_toBottomOf="@+id/action_button_1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -51,13 +51,13 @@ public class ReviewListActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("A", document.getId() + " => " + document.getData());
+                                Log.d("ViewReviews", document.getId() + " => " + document.getData());
                                 LocationObject obj = document.toObject(LocationObject.class);
                                 dataModelList.add(obj);
                             }
 
                         } else {
-                            Log.d("A", "Error getting documents: ", task.getException());
+                            Log.d("ViewReviews", "Error getting reviews: ", task.getException());
                         }
                         mRecyclerView.setHasFixedSize(true);
 
@@ -72,30 +72,8 @@ public class ReviewListActivity extends AppCompatActivity {
                         mRecyclerView.setAdapter(mAdapter);
                     }
                 });
-
-
-        //List<LocationObject> dataModelList = new ArrayList<>();
-        //for (int i = 1; i <= 20; ++i) {
-        //    dataModelList.add(new LocationObject(title, subject, review, imageURL, rating, author, comments));
-        //}
-
-        // use this setting to improve performance if you know that changes
-
-        // in content do not change the layout size of the RecyclerView
-/*
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter and pass in our data model list
-
-        mAdapter = new MyAdapter(dataModelList, this);
-        mRecyclerView.setAdapter(mAdapter);
-
- */
+        // TODO Where to put onClick for action button
+        // TODO how to get review to pass as intent when action button is clicked
     }
 }
 
