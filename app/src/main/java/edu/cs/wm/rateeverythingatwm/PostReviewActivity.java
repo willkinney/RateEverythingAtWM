@@ -92,8 +92,9 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         int rating = ratingSeekbar.getProgress();
 
         ArrayList<String> comments = new ArrayList<String>();
+        final String freshReviewID = UUID.randomUUID().toString();
 
-        StorageReference ref = mStorageRef.child("images/newfile.png");
+        StorageReference ref = mStorageRef.child(freshReviewID + ".png");
         if (selectedImage != null) {
             ref.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -112,25 +113,11 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     });
         }
 
-        final String freshReviewID = UUID.randomUUID().toString();
 
         LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL,
                 rating, currentUser.getDisplayName().split(" ")[0], comments,
                 Calendar.getInstance().getTime().toString(), freshReviewID);
 
-//        mDocRef.add(review)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d("ReviewUpload", "Review added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w("ReviewUpload", "Error uploading review", e);
-//                    }
-//                });
         mDocRef.document(freshReviewID).set(review)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
