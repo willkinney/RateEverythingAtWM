@@ -30,23 +30,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView cardImageView;
         public TextView titleTextView;
+        public TextView idTextView;
         public TextView subTitleTextView;
+        public String reviewID;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             cardImageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.card_title);
             subTitleTextView = itemView.findViewById(R.id.card_subtitle);
+            idTextView = itemView.findViewById(R.id.idTextView);
         }
 
         public void bindData(final LocationObject dataModel, Context context) {
-//            cardImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_image));
+//            this.reviewID = dataModel.getReviewID();
+            idTextView.setText(dataModel.getReviewID());
             StorageReference reviewImageRef = FirebaseStorage.getInstance()
                     .getReference().child("images/" + dataModel.getReviewID() + ".png");
 
             if (dataModel.getHasImage()) {
-                final long TEN_MEGABYTES = 1024 * 1024 * 50;
-                reviewImageRef.getBytes(TEN_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                final long FIFTY_MEGABYTES = 1024 * 1024 * 50;
+                reviewImageRef.getBytes(FIFTY_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] reviewImageBytes) {
                         // Data for "images/island.jpg" is returns, use this as needed
@@ -107,4 +111,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // Return the total number of items
         return dataModelList.size();
     }
+
 }

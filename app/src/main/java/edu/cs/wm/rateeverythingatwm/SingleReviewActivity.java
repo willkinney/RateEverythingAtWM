@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class SingleReviewActivity extends AppCompatActivity {
 
@@ -33,6 +34,15 @@ public class SingleReviewActivity extends AppCompatActivity {
     private void setUpReview() {
         Bundle incomingBundle = getIntent().getExtras();
         LocationObject wholeReview = (LocationObject) incomingBundle.getSerializable("REVIEW");
+
+        if (wholeReview.getHasImage()) {
+            // TODO put the picture on the screen
+            StorageReference reviewImageRef = FirebaseStorage.getInstance()
+                    .getReference().child("images/" + wholeReview.getReviewID() + ".png");
+
+        }
+
+        // TODO add author to screen
 
         String subjectText = wholeReview.getSubject();
         String titleText = wholeReview.getTitle();

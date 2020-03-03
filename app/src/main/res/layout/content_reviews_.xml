@@ -47,13 +47,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:onClick="goToReview"
             android:text="SHOW FULL REVIEW"
-            android:textSize="15sp"
             android:textAppearance="
             @style/TextAppearance.MaterialComponents.Headline6"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/card_subtitle"
-            app:layout_constraintTop_toBottomOf="@+id/card_subtitle"
-            android:onClick="goToReview" />
+            app:layout_constraintTop_toBottomOf="@+id/card_subtitle" />
+
+        <TextView
+            android:id="@+id/idTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
