@@ -27,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PostReviewActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -111,7 +112,9 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     });
         }
 
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL, rating, currentUser.getDisplayName().split(" ")[0], comments);
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL,
+                rating, currentUser.getDisplayName().split(" ")[0], comments,
+                Calendar.getInstance().getTime().toString());
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -48,7 +49,7 @@ public class ReviewListActivity extends AppCompatActivity {
         clickedReview = new LocationObject("Example Title", "Example Subject",
                 "Example review text. More text. More and more.",
                 "exampleimageurl.jpg", 6,
-                "ExampleAuthor", null);
+                "ExampleAuthor", null, Calendar.getInstance().getTime().toString());
 
         final Context context = this;
 
