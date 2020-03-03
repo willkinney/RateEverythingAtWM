@@ -48,7 +48,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     private SeekBar ratingSeekbar;
 
     private Uri selectedImage = null;
-    private String imageURL = null;
+    private Boolean hasImage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+//                            imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString()
                             Log.v("ImageUpload", "Successfully uploaded image with URL");
                         }
                     })
@@ -113,8 +113,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         }
 
 
-
-        LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL,
+        LocationObject review = new LocationObject(titleText, subjectText, reviewText, hasImage,
                 rating, currentUser.getDisplayName().split(" ")[0], comments,
                 Calendar.getInstance().getTime().toString(), freshReviewID);
 
@@ -172,6 +171,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         switch (requestCode) {
             case 0:
                 if (resultCode == RESULT_OK) {
+                    hasImage = true;
                     selectedImage = imageReturnedIntent.getData();
                     thumbnailImageView.setImageURI(selectedImage);
                     photoLabelTextView.setVisibility(View.VISIBLE);
@@ -180,6 +180,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                 break;
             case 1:
                 if (resultCode == RESULT_OK) {
+                    hasImage = true;
                     selectedImage = imageReturnedIntent.getData();
                     thumbnailImageView.setImageURI(selectedImage);
                     photoLabelTextView.setVisibility(View.VISIBLE);

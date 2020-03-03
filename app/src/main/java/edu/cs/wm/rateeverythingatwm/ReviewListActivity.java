@@ -48,7 +48,7 @@ public class ReviewListActivity extends AppCompatActivity {
         dataModelList = new ArrayList<>();
         clickedReview = new LocationObject("Example Title", "Example Subject",
                 "Example review text. More text. More and more.",
-                "exampleimageurl.jpg", 6,
+                false, 6,
                 "ExampleAuthor", null, Calendar.getInstance().getTime().toString(), "demo-review-id");
 
         final Context context = this;

@@ -8,7 +8,7 @@ public class LocationObject implements Serializable {
     private String subject;
     private String title;
     private String review;
-    private String imageURL;
+    private Boolean hasImage;
     private int rating;
     private ArrayList<String> comments;
     private String author;
@@ -21,12 +21,12 @@ public class LocationObject implements Serializable {
 
     }
 
-    public LocationObject(String title, String subject, String review, String imageURL, int rating,
+    public LocationObject(String title, String subject, String review, Boolean hasImage, int rating,
                           String author, ArrayList<String> comments, String timestamp, String reviewID) {
         this.subject = subject;
         this.title = title;
         this.review = review;
-        this.imageURL = imageURL;
+        this.hasImage = hasImage;
         this.rating = rating;
         this.comments = comments;
         this.author = author;
@@ -44,8 +44,8 @@ public class LocationObject implements Serializable {
         return this.review;
     }
 
-    public String getImageURL() {
-        return this.imageURL;
+    public Boolean getHasImage() {
+        return this.hasImage;
     }
 
     public int getRating(){
