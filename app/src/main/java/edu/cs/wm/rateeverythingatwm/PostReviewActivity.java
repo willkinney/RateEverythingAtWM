@@ -90,42 +90,40 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
         int rating = ratingSeekbar.getProgress();
 
+        ArrayList<String> comments = new ArrayList<String>();
+
         StorageReference ref = mStorageRef.child("images/newfile.png");
         if (selectedImage != null) {
             ref.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Get a URL to the uploaded content
-                            Log.v("success", "succ");
+                            Log.v("ImageUpload", "Successfully uploaded image");
                             imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
-                            // ...
-                            Log.v("failure999", "damn999");
+                            Log.v("ImageUpload", "Failed to upload image");
 
                         }
                     });
         }
 
-        ArrayList<String> comments = new ArrayList<String>();
         LocationObject review = new LocationObject(titleText, subjectText, reviewText, imageURL, rating, currentUser.getDisplayName().split(" ")[0], comments);
 
         mDocRef.add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Yes", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Log.d("ReviewUpload", "Review added with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("No", "Error adding document", e);
+                        Log.w("ReviewUpload", "Error uploading review", e);
                     }
                 });
 
@@ -134,7 +132,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         bundle.putSerializable("REVIEW", review);
         postedIntent.putExtras(bundle);
         startActivity(postedIntent);
-
+        finish();
     }
 
     public void takePic(View view){

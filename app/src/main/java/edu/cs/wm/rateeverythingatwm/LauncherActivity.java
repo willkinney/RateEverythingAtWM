@@ -26,9 +26,9 @@ public class LauncherActivity extends AppCompatActivity {
                 intent = new Intent(this, ReviewListActivity.class);
                 break;
 
-            case R.id.viewProfileButton:
-                intent = new Intent(this, ProfileActivity.class);
-                break;
+//            case R.id.viewProfileButton:
+//                intent = new Intent(this, ProfileActivity.class);
+//                break;
 
             case R.id.newReviewButton:
                 intent = new Intent(this, PostReviewActivity.class);

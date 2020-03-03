@@ -34,14 +34,6 @@
             android:onClick="launcherOnClick"
             android:text="Write a new review"
             android:layout_below="@id/viewReviewsButton" />
-
-        <Button
-            android:id="@+id/viewProfileButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="launcherOnClick"
-            android:text="View your reviews"
-            android:layout_below="@id/newReviewButton" />
     </RelativeLayout>
 
 </LinearLayout>
