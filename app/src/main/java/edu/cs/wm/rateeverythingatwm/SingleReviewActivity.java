@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +40,7 @@ public class SingleReviewActivity extends AppCompatActivity {
     private ArrayList<String> comments;
     private LocationObject wholeReview;
     private String ID;
+    private ImageView image;
 
 
     private FirebaseAuth mAuth;
@@ -53,6 +57,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         ratingView = findViewById(R.id.ratingText);
         authorTextView = findViewById(R.id.authorText);
         commentEditText = findViewById(R.id.commentEditText);
+        image = findViewById(R.id.imageView2);
 
         db = FirebaseFirestore.getInstance();
         mDocRef = db.collection("reviews");
@@ -71,7 +76,9 @@ public class SingleReviewActivity extends AppCompatActivity {
             // TODO put the picture on the screen
             StorageReference reviewImageRef = FirebaseStorage.getInstance()
                     .getReference().child("images/" + wholeReview.getReviewID() + ".png");
-
+            GlideApp.with(this /* context */)
+                    .load(reviewImageRef)
+                    .into(image);
         }
 
         String subjectText = wholeReview.getSubject();
