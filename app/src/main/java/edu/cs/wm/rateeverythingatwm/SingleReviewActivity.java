@@ -23,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SingleReviewActivity extends AppCompatActivity {
 
@@ -92,7 +93,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         for(String comment : comments){
             TextView commentsToAdd = new TextView(this);
             commentsToAdd.setGravity(Gravity.BOTTOM);
-            commentsToAdd.setText(comment);
+            commentsToAdd.setText(mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + comment);
             linearLayout.addView(commentsToAdd);
         }
     }
@@ -110,7 +111,8 @@ public class SingleReviewActivity extends AppCompatActivity {
         }
         else{
             comments.add(newComment);
-            mDocRef.document(ID).update("comments", FieldValue.arrayUnion(newComment))
+            mDocRef.document(ID).update("comments", FieldValue.arrayUnion(
+                    mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + newComment))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -129,7 +131,7 @@ public class SingleReviewActivity extends AppCompatActivity {
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(this);
             textView.setGravity(Gravity.BOTTOM);
-            textView.setText(newComment);
+            textView.setText(mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + newComment);
             linearLayout.addView(textView);
 
 
