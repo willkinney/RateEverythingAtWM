@@ -74,8 +74,6 @@ public class SingleReviewActivity extends AppCompatActivity {
 
         }
 
-
-
         String subjectText = wholeReview.getSubject();
         String titleText = wholeReview.getTitle();
         String reviewText = wholeReview.getReview();
@@ -85,7 +83,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         subjectTextView.setText(subjectText);
         titleTextView.setText(titleText);
         reviewTextView.setText(reviewText);
-        ratingView.setText(rating);
+        ratingView.setText(rating + "/10");
         authorTextView.setText(author);
 
         LinearLayout linearLayout = findViewById(R.id.LinearLayout);
