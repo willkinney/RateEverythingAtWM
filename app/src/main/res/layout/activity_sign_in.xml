@@ -28,7 +28,7 @@
             android:padding="50sp" />
 
         <com.google.android.gms.common.SignInButton
-            android:id="@+id/signInButton"
+            android:id="@+id/gSignInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pleaseTextView"

@@ -48,12 +48,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             StorageReference reviewImageRef = FirebaseStorage.getInstance()
                     .getReference().child("images/" + dataModel.getReviewID() + ".png");
 
-            if (dataModel.getHasImage()) {
+            if (/*dataModel.getHasImage()*/ false) {
                 final long FIFTY_MEGABYTES = 1024 * 1024 * 50;
                 reviewImageRef.getBytes(FIFTY_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] reviewImageBytes) {
-                        // Data for "images/island.jpg" is returns, use this as needed
                         Bitmap bitmap = BitmapFactory.decodeByteArray(reviewImageBytes, 0, reviewImageBytes.length);
                         cardImageView.setImageBitmap(bitmap);
                     }

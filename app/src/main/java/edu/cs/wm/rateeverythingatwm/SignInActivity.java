@@ -39,12 +39,12 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        signIn = findViewById(R.id.signInButton);
+        signIn = findViewById(R.id.gSignInButton);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.signInButton:
+                    case R.id.gSignInButton:
                         signIn();
                         break;
                 }
