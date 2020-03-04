@@ -113,17 +113,17 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     });
         }
 
-        if (subjectText.equals("")) {
+        if (subjectText.matches("")) {
             Toast.makeText(getApplicationContext(), "Subject cannot be empty", Toast.LENGTH_SHORT).show();
         }
-        if (titleText.equals("")) {
+        if (titleText.matches("")) {
             Toast.makeText(getApplicationContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
         }
-        if (reviewText.equals("")) {
+        if (reviewText.matches("")) {
             Toast.makeText(getApplicationContext(), "Review body cannot be empty", Toast.LENGTH_SHORT).show();
         }
 
-        if (!subjectText.equals("") && !titleText.equals("") && !reviewText.equals("")) {
+        if (!subjectText.matches("") && !titleText.matches("") && !reviewText.matches("")) {
             LocationObject review = new LocationObject(titleText, subjectText, reviewText, hasImage,
                     rating, currentUser.getDisplayName().split(" ")[0], comments,
                     Calendar.getInstance().getTime().toString(), freshReviewID);

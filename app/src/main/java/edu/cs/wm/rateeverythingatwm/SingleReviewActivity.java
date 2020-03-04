@@ -96,7 +96,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         LinearLayout linearLayout = findViewById(R.id.LinearLayout);
         setContentView(linearLayout);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        for(String comment : comments){
+        for (String comment : comments) {
             TextView commentsToAdd = new TextView(this);
             commentsToAdd.setGravity(Gravity.BOTTOM);
             commentsToAdd.setText(comment);
@@ -113,18 +113,17 @@ public class SingleReviewActivity extends AppCompatActivity {
         // TODO Add functionality to add comments to already existing reviews
         String newComment =
                 mAuth.getCurrentUser().getDisplayName().split(" ")[0] + " @ " + wholeReview.getTimestamp() + ":\n" + commentEditText.getText().toString();
-        if(newComment.equals("")){
+        if (/*newComment.equals("")*/commentEditText.getText().toString().matches("")) {
             Toast.makeText(getApplicationContext(), "Comment cannot be empty", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             comments.add(newComment);
             mDocRef.document(ID).update("comments", FieldValue.arrayUnion(newComment))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d("ADD COMMENT", "DocumentSnapshot successfully updated!");
-                }
-            })
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("ADD COMMENT", "DocumentSnapshot successfully updated!");
+                        }
+                    })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
