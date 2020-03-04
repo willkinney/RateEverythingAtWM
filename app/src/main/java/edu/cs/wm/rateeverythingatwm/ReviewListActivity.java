@@ -30,7 +30,6 @@ public class ReviewListActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    //    private ArrayList<String> comments;
     List<LocationObject> dataModelList;
 
     private LocationObject clickedReview;
@@ -81,47 +80,6 @@ public class ReviewListActivity extends AppCompatActivity {
                 });
     }
 
-    /*
-        public void goToReview(View view) {
-            switch (view.getId()) {
-                case R.id.showFullReviewButton:
-                    // TODO get the specific review to pass as an intent when action button is clicked
-                    TextView reviewIDTextView = findViewById(R.id.idTextView);
-                    String reviewIDString = reviewIDTextView.getText().toString();
-
-                    DocumentReference docRef = db.collection("reviews").document(reviewIDString);
-                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    LocationObject reviewToBundle = document.toObject(LocationObject.class);
-                                    Log.d("FetchIndivReview", "DocumentSnapshot data: " + document.getData());
-                                    Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("REVIEW", reviewToBundle);
-                                    postedIntent.putExtras(bundle);
-                                    startActivity(postedIntent);
-                                } else {
-                                    Log.d("FetchIndivReview", "No such document");
-                                }
-                            } else {
-                                Log.d("FetchIndivReview", "get failed with ", task.getException());
-                            }
-                        }
-                    });
-
-
-    //                Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-    //                Bundle bundle = new Bundle();
-    //                bundle.putSerializable("REVIEW", clickedReview);
-    //                postedIntent.putExtras(bundle);
-    //                startActivity(postedIntent);
-                    break;
-            }
-        }
-    */
     public void toNewReview(View v){
         Intent intent = new Intent(this, PostReviewActivity.class);
         startActivity(intent);
