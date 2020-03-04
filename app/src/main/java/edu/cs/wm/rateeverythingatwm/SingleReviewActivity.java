@@ -93,7 +93,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         for(String comment : comments){
             TextView commentsToAdd = new TextView(this);
             commentsToAdd.setGravity(Gravity.BOTTOM);
-            commentsToAdd.setText(mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + comment);
+            commentsToAdd.setText(comment);
             linearLayout.addView(commentsToAdd);
         }
     }
@@ -105,14 +105,14 @@ public class SingleReviewActivity extends AppCompatActivity {
 
     public void addComment(View view) {
         // TODO Add functionality to add comments to already existing reviews
-        String newComment = commentEditText.getText().toString();
+        String newComment =
+                mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + commentEditText.getText().toString();
         if(newComment.equals("")){
             Toast.makeText(getApplicationContext(), "Comment cannot be empty", Toast.LENGTH_SHORT).show();
         }
         else{
             comments.add(newComment);
-            mDocRef.document(ID).update("comments", FieldValue.arrayUnion(
-                    mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + newComment))
+            mDocRef.document(ID).update("comments", FieldValue.arrayUnion(newComment))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -131,7 +131,7 @@ public class SingleReviewActivity extends AppCompatActivity {
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(this);
             textView.setGravity(Gravity.BOTTOM);
-            textView.setText(mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + newComment);
+            textView.setText(newComment);
             linearLayout.addView(textView);
 
 
