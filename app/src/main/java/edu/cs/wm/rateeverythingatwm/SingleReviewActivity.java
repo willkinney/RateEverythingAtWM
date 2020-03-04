@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +80,7 @@ public class SingleReviewActivity extends AppCompatActivity {
                     .getReference().child("images/" + wholeReview.getReviewID() + ".png");
             GlideApp.with(this /* context */)
                     .load(reviewImageRef)
+                    .override(500, 500)
                     .into(image);
         } else {
             image.setVisibility(View.GONE);
@@ -95,9 +98,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         ratingView.setText(rating + "/10");
         authorTextView.setText(author);
 
-        LinearLayout linearLayout = findViewById(R.id.LinearLayout);
-        setContentView(linearLayout);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout linearLayout = findViewById(R.id.commentLayout);
         for (String comment : comments) {
             TextView commentsToAdd = new TextView(this);
             commentsToAdd.setGravity(Gravity.BOTTOM);
@@ -133,14 +134,13 @@ public class SingleReviewActivity extends AppCompatActivity {
                         }
                     });
             commentEditText.setText("");
-            LinearLayout linearLayout = findViewById(R.id.LinearLayout);
-            setContentView(linearLayout);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+            LinearLayout linearLayout = findViewById(R.id.commentLayout);
             TextView textView = new TextView(this);
             textView.setGravity(Gravity.BOTTOM);
             textView.setText(newComment);
             linearLayout.addView(textView);
-
+            linearLayout.invalidate();
         }
     }
 }

@@ -7,88 +7,99 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:id="@+id/subjectText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Subject text will be here"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/commentLayout">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/list_image" />
+            <TextView
+                android:id="@+id/subjectText"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Subject text will be here"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Review title will be here"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Review title will be here"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/authorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="author text will be here"
+                android:textAlignment="center"
+                android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/authorText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="author text will be here"
-        android:textAlignment="center"
-        android:textStyle="italic" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/list_image" />
 
-    <TextView
-        android:id="@+id/ratingLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ranking: " />
+            <TextView
+                android:id="@+id/ratingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ranking: " />
 
-    <TextView
-        android:id="@+id/ratingText"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:text="Ranking will be here" />
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:text="Ranking will be here" />
 
-    <TextView
-        android:id="@+id/reviewText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Review text will be here" />
+            <TextView
+                android:id="@+id/reviewText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Review text will be here" />
 
-    <EditText
-        android:id="@+id/commentEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Comment" />
+            <EditText
+                android:id="@+id/commentEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Comment"
+                android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/addCommentButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Post Comment"
-        android:onClick="addComment"/>
+            <Button
+                android:id="@+id/addCommentButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="addComment"
+                android:text="Post Comment" />
 
-    <Button
-        android:id="@+id/viewReviewsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="viewReviews"
-        android:text="Back to reviews" />
+            <Button
+                android:id="@+id/viewReviewsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="viewReviews"
+                android:text="Back to reviews" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

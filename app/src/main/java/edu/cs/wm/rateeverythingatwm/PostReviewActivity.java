@@ -1,6 +1,8 @@
 package edu.cs.wm.rateeverythingatwm;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -47,6 +49,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     private EditText titleEditText;
     private EditText reviewEditText;
     private SeekBar ratingSeekbar;
+    private boolean hasperms;
 
     private Uri selectedImage = null;
     private Boolean hasImage = false;
@@ -172,8 +175,24 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.chooseFromGalleryButton:
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 29837);
                 pickPic(view);
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 29837) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted.
+                hasperms = true;
+            } else {
+                // User refused to grant permission.
+                hasperms = false;
+
+            }
         }
     }
 
