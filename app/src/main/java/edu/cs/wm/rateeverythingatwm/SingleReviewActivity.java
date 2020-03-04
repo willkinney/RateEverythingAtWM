@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SingleReviewActivity extends AppCompatActivity {
 
@@ -72,6 +73,7 @@ public class SingleReviewActivity extends AppCompatActivity {
 
         if (wholeReview.getHasImage()) {
             // TODO put the picture on the screen
+            image.setVisibility(View.VISIBLE);
             StorageReference reviewImageRef = FirebaseStorage.getInstance()
                     .getReference().child("images/" + wholeReview.getReviewID() + ".png");
             GlideApp.with(this /* context */)
@@ -112,8 +114,8 @@ public class SingleReviewActivity extends AppCompatActivity {
     public void addComment(View view) {
         // TODO Add functionality to add comments to already existing reviews
         String newComment =
-                mAuth.getCurrentUser().getDisplayName().split(" ")[0] + " @ " + wholeReview.getTimestamp() + ":\n" + commentEditText.getText().toString();
-        if (/*newComment.equals("")*/commentEditText.getText().toString().matches("")) {
+                mAuth.getCurrentUser().getDisplayName().split(" ")[0] + " @ " + Calendar.getInstance().getTime().toString() + ":\n" + commentEditText.getText().toString();
+        if (commentEditText.getText().toString().matches("")) {
             Toast.makeText(getApplicationContext(), "Comment cannot be empty", Toast.LENGTH_SHORT).show();
         } else {
             comments.add(newComment);

@@ -61,7 +61,7 @@ public class ReviewListActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("ViewReviews", document.getId() + " => " + document.getData());
+                                // Log.d("ViewReviews", document.getId() + " => " + document.getData());
                                 LocationObject obj = document.toObject(LocationObject.class);
                                 dataModelList.add(obj);
                             }
