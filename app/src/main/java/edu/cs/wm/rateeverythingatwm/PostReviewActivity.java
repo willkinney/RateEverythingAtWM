@@ -113,21 +113,17 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                     });
         }
 
-        if(subjectText.equals("")){
+        if (subjectText.equals("")) {
             Toast.makeText(getApplicationContext(), "Subject cannot be empty", Toast.LENGTH_SHORT).show();
         }
-        else if(titleText.equals("")){
+        if (titleText.equals("")) {
             Toast.makeText(getApplicationContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
         }
-        else if(reviewText.equals("")){
+        if (reviewText.equals("")) {
             Toast.makeText(getApplicationContext(), "Review body cannot be empty", Toast.LENGTH_SHORT).show();
         }
-        else if(selectedImage == null){
-            Toast.makeText(getApplicationContext(), "Choose or take an Image", Toast.LENGTH_SHORT).show();
-        }
-        else {
 
-
+        if (!subjectText.equals("") && !titleText.equals("") && !reviewText.equals("")) {
             LocationObject review = new LocationObject(titleText, subjectText, reviewText, hasImage,
                     rating, currentUser.getDisplayName().split(" ")[0], comments,
                     Calendar.getInstance().getTime().toString(), freshReviewID);
@@ -156,7 +152,6 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
             finish();
         }
-
     }
 
     public void takePic(View view) {

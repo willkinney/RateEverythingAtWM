@@ -14,8 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,6 +77,8 @@ public class SingleReviewActivity extends AppCompatActivity {
             GlideApp.with(this /* context */)
                     .load(reviewImageRef)
                     .into(image);
+        } else {
+            image.setVisibility(View.GONE);
         }
 
         String subjectText = wholeReview.getSubject();
@@ -112,7 +112,7 @@ public class SingleReviewActivity extends AppCompatActivity {
     public void addComment(View view) {
         // TODO Add functionality to add comments to already existing reviews
         String newComment =
-                mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + commentEditText.getText().toString();
+                mAuth.getCurrentUser().getDisplayName().split(" ")[0] + " @ " + wholeReview.getTimestamp() + ":\n" + commentEditText.getText().toString();
         if(newComment.equals("")){
             Toast.makeText(getApplicationContext(), "Comment cannot be empty", Toast.LENGTH_SHORT).show();
         }
@@ -131,7 +131,7 @@ public class SingleReviewActivity extends AppCompatActivity {
                             Log.w("ADD COMMENT", "Error updating document", e);
                         }
                     });
-
+            commentEditText.setText("");
             LinearLayout linearLayout = findViewById(R.id.LinearLayout);
             setContentView(linearLayout);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -139,7 +139,6 @@ public class SingleReviewActivity extends AppCompatActivity {
             textView.setGravity(Gravity.BOTTOM);
             textView.setText(newComment);
             linearLayout.addView(textView);
-
 
         }
     }
