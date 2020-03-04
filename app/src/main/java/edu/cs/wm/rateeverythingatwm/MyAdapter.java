@@ -84,13 +84,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             if (dataModel.getTitle().matches("")) {
                 titleTextView.setText("(no title)");
             } else {
-                titleTextView.setText(dataModel.getTitle());
+                titleTextView.setText(dataModel.getSubject());
             }
 
             if (dataModel.getSubject().matches("")) {
                 subTitleTextView.setText("(no subject)");
             } else {
-                subTitleTextView.setText(dataModel.getSubject());
+                subTitleTextView.setText(dataModel.getTitle());
             }
         }
     }

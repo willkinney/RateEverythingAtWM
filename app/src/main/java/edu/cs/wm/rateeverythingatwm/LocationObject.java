@@ -1,9 +1,11 @@
 package edu.cs.wm.rateeverythingatwm;
 
+import android.location.Location;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LocationObject implements Serializable {
+public class LocationObject implements Serializable, Comparable<LocationObject> {
 
     private String subject;
     private String title;
@@ -67,5 +69,13 @@ public class LocationObject implements Serializable {
     public String getReviewID() {
         return this.reviewID;
     }
+
+    @Override
+    public int compareTo(LocationObject o){
+        String x = this.getSubject();
+        String y = o.getSubject();
+        return(x.toUpperCase().compareTo(y.toUpperCase()));
+    }
+
 
 }

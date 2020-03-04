@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -73,7 +74,7 @@ public class ReviewListActivity extends AppCompatActivity {
                         mRecyclerView.setLayoutManager(mLayoutManager);
 
                         // specify an adapter and pass in our data model list
-
+                        Collections.sort(dataModelList);
                         mAdapter = new MyAdapter(dataModelList, context);
                         mRecyclerView.setAdapter(mAdapter);
                     }
