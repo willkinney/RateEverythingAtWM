@@ -32,6 +32,7 @@ public class SingleReviewActivity extends AppCompatActivity {
     private TextView titleTextView;
     private TextView reviewTextView;
     private TextView ratingView;
+    private TextView authorTextView;
     private EditText commentEditText;
     private ArrayList<String> comments;
     private LocationObject wholeReview;
@@ -50,6 +51,7 @@ public class SingleReviewActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.titleText);
         reviewTextView = findViewById(R.id.reviewText);
         ratingView = findViewById(R.id.ratingText);
+        authorTextView = findViewById(R.id.authorText);
         commentEditText = findViewById(R.id.commentEditText);
 
         db = FirebaseFirestore.getInstance();
@@ -72,17 +74,19 @@ public class SingleReviewActivity extends AppCompatActivity {
 
         }
 
-        // TODO add author to screen
+
 
         String subjectText = wholeReview.getSubject();
         String titleText = wholeReview.getTitle();
         String reviewText = wholeReview.getReview();
         String rating = String.valueOf(wholeReview.getRating());
+        String author = wholeReview.getAuthor();
 
         subjectTextView.setText(subjectText);
         titleTextView.setText(titleText);
         reviewTextView.setText(reviewText);
         ratingView.setText(rating);
+        authorTextView.setText(author);
 
         LinearLayout linearLayout = findViewById(R.id.LinearLayout);
         setContentView(linearLayout);

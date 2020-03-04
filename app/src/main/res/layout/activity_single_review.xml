@@ -9,10 +9,14 @@
     <TextView
         android:id="@+id/subjectText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Subject text will be here" />
+        android:text="Subject text will be here"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 
     <TextView
@@ -21,16 +25,21 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Review title will be here" />
+        android:text="Review title will be here"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
     <TextView
-        android:id="@+id/reviewText"
+        android:id="@+id/authorText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Review text will be here" />
+        android:text="author text will be here"
+        android:textAlignment="center"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/ratingLabel"
@@ -41,15 +50,16 @@
     <TextView
         android:id="@+id/ratingText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:text="Ranking will be here" />
 
-    <Button
-        android:id="@+id/viewReviewsButton"
+    <TextView
+        android:id="@+id/reviewText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="viewReviews"
-        android:text="View reviews" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Review text will be here" />
 
     <EditText
         android:id="@+id/commentEditText"
@@ -65,6 +75,13 @@
         android:layout_height="wrap_content"
         android:text="Post Comment"
         android:onClick="addComment"/>
+
+    <Button
+        android:id="@+id/viewReviewsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="viewReviews"
+        android:text="Back to reviews" />
 
 
 </LinearLayout>
