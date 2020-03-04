@@ -146,13 +146,17 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                         }
                     });
 
-            Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("REVIEW", review);
-            postedIntent.putExtras(bundle);
-
-            startActivity(postedIntent);
-
+//            Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("REVIEW", review);
+//            postedIntent.putExtras(bundle);
+//
+//            startActivity(postedIntent);
+//
+//            finish();
+            Intent backToListIntent = new Intent(getApplicationContext(), ReviewListActivity.class);
+            Toast.makeText(getApplicationContext(), "Review posted!", Toast.LENGTH_LONG).show();
+            startActivity(backToListIntent);
             finish();
         }
     }
@@ -185,14 +189,9 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 29837) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted.
-                hasperms = true;
-            } else {
-                // User refused to grant permission.
-                hasperms = false;
-
-            }
+            // Permission granted.
+            // User refused to grant permission.
+            hasperms = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
     }
 

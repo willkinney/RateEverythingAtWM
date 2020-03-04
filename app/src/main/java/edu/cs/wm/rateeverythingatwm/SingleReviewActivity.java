@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,7 +111,6 @@ public class SingleReviewActivity extends AppCompatActivity {
     }
 
     public void addComment(View view) {
-        // TODO Add functionality to add comments to already existing reviews
         String newComment =
                 mAuth.getCurrentUser().getDisplayName().split(" ")[0] + " @ " + Calendar.getInstance().getTime().toString() + ":\n" + commentEditText.getText().toString();
         if (commentEditText.getText().toString().matches("")) {
@@ -133,6 +130,7 @@ public class SingleReviewActivity extends AppCompatActivity {
                             Log.w("ADD COMMENT", "Error updating document", e);
                         }
                     });
+
             commentEditText.setText("");
 
             LinearLayout linearLayout = findViewById(R.id.commentLayout);
