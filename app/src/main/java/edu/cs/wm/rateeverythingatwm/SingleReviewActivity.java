@@ -111,7 +111,8 @@ public class SingleReviewActivity extends AppCompatActivity {
 
     public void addComment(View view) {
         // TODO Add functionality to add comments to already existing reviews
-        String newComment = commentEditText.getText().toString();
+        String newComment =
+                mAuth.getCurrentUser().getDisplayName() + " @ " + wholeReview.getTimestamp() + ":\n" + commentEditText.getText().toString();
         if(newComment.equals("")){
             Toast.makeText(getApplicationContext(), "Comment cannot be empty", Toast.LENGTH_SHORT).show();
         }

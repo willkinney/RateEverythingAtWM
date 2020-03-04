@@ -123,6 +123,11 @@ public class ReviewListActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void toNewReview(View v){
+        Intent intent = new Intent(this, PostReviewActivity.class);
+        startActivity(intent);
+    }
 }
 
 
