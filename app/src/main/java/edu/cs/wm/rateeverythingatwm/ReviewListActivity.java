@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -84,46 +81,47 @@ public class ReviewListActivity extends AppCompatActivity {
                 });
     }
 
-    public void goToReview(View view) {
-        switch (view.getId()) {
-            case R.id.showFullReviewButton:
-                // TODO get the specific review to pass as an intent when action button is clicked
-                TextView reviewIDTextView = findViewById(R.id.idTextView);
-                String reviewIDString = reviewIDTextView.getText().toString();
+    /*
+        public void goToReview(View view) {
+            switch (view.getId()) {
+                case R.id.showFullReviewButton:
+                    // TODO get the specific review to pass as an intent when action button is clicked
+                    TextView reviewIDTextView = findViewById(R.id.idTextView);
+                    String reviewIDString = reviewIDTextView.getText().toString();
 
-                DocumentReference docRef = db.collection("reviews").document(reviewIDString);
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                LocationObject reviewToBundle = document.toObject(LocationObject.class);
-                                Log.d("FetchIndivReview", "DocumentSnapshot data: " + document.getData());
-                                Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("REVIEW", reviewToBundle);
-                                postedIntent.putExtras(bundle);
-                                startActivity(postedIntent);
+                    DocumentReference docRef = db.collection("reviews").document(reviewIDString);
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    LocationObject reviewToBundle = document.toObject(LocationObject.class);
+                                    Log.d("FetchIndivReview", "DocumentSnapshot data: " + document.getData());
+                                    Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("REVIEW", reviewToBundle);
+                                    postedIntent.putExtras(bundle);
+                                    startActivity(postedIntent);
+                                } else {
+                                    Log.d("FetchIndivReview", "No such document");
+                                }
                             } else {
-                                Log.d("FetchIndivReview", "No such document");
+                                Log.d("FetchIndivReview", "get failed with ", task.getException());
                             }
-                        } else {
-                            Log.d("FetchIndivReview", "get failed with ", task.getException());
                         }
-                    }
-                });
+                    });
 
 
-//                Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("REVIEW", clickedReview);
-//                postedIntent.putExtras(bundle);
-//                startActivity(postedIntent);
-                break;
+    //                Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
+    //                Bundle bundle = new Bundle();
+    //                bundle.putSerializable("REVIEW", clickedReview);
+    //                postedIntent.putExtras(bundle);
+    //                startActivity(postedIntent);
+                    break;
+            }
         }
-    }
-
+    */
     public void toNewReview(View v){
         Intent intent = new Intent(this, PostReviewActivity.class);
         startActivity(intent);

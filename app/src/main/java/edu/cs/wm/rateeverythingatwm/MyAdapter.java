@@ -28,21 +28,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<LocationObject> dataModelList;
     private Context mContext;
-//    private final ClickListener listener;
-//
-//    public MyAdapter(List<LocationObject> dataModelList, ClickListener listener) {
-//        this.listener = listener;
-//        this.dataModelList = dataModelList;
-//    }
 
     // View holder class whose objects represent each list item
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView cardImageView;
         public TextView titleTextView;
-        public TextView idTextView;
+        //        public TextView idTextView;
         public TextView subTitleTextView;
-        public String reviewID;
         public ImageView hasPhotoImageView;
         public Button showFullReviewButton;
 
@@ -53,14 +46,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             cardImageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.card_title);
             subTitleTextView = itemView.findViewById(R.id.card_subtitle);
-            idTextView = itemView.findViewById(R.id.idTextView);
+//            idTextView = itemView.findViewById(R.id.idTextView);
             hasPhotoImageView = itemView.findViewById(R.id.hasPhotoImageView);
             showFullReviewButton = itemView.findViewById(R.id.showFullReviewButton);
         }
 
         public void bindData(final LocationObject dataModel, Context context) {
-//            this.reviewID = dataModel.getReviewID();
-            idTextView.setText(dataModel.getReviewID());
+//            idTextView.setText(dataModel.getReviewID());
             StorageReference reviewImageRef = FirebaseStorage.getInstance()
                     .getReference().child("images/" + dataModel.getReviewID() + ".png");
 
@@ -69,7 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             } else {
                 hasPhotoImageView.setVisibility(View.GONE);
             }
-
+// Removed code that shows image on card in scrollable list
 //            if (/*dataModel.getHasImage()*/ false) {
 //                final long FIFTY_MEGABYTES = 1024 * 1024 * 50;
 //                reviewImageRef.getBytes(FIFTY_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -89,13 +81,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 //                cardImageView.setVisibility(View.GONE);
 //            }
 
-            if (dataModel.getTitle() == "") {
+            if (dataModel.getTitle().matches("")) {
                 titleTextView.setText("(no title)");
             } else {
                 titleTextView.setText(dataModel.getTitle());
             }
 
-            if (dataModel.getSubject() == "") {
+            if (dataModel.getSubject().matches("")) {
                 subTitleTextView.setText("(no subject)");
             } else {
                 subTitleTextView.setText(dataModel.getSubject());
@@ -123,14 +115,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         // Bind data for the item at position
-
         holder.bindData(dataModelList.get(position), mContext);
 
         holder.showFullReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String reviewIDString = dataModelList.get(position).getReviewID();
-
                 DocumentReference docRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewIDString);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -140,11 +130,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             if (document.exists()) {
                                 LocationObject reviewToBundle = document.toObject(LocationObject.class);
                                 Log.d("FetchIndivReview", "DocumentSnapshot data: " + document.getData());
-                                Intent postedIntent = new Intent(mContext, SingleReviewActivity.class);
+                                Intent showFullReviewIntent = new Intent(mContext, SingleReviewActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("REVIEW", reviewToBundle);
-                                postedIntent.putExtras(bundle);
-                                mContext.startActivity(postedIntent);
+                                showFullReviewIntent.putExtras(bundle);
+                                mContext.startActivity(showFullReviewIntent);
                             } else {
                                 Log.d("FetchIndivReview", "No such document");
                             }
@@ -161,16 +151,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public int getItemCount() {
         // Return the total number of items
         return dataModelList.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
     }
 
 }
