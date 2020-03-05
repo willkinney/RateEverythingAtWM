@@ -2,21 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/LinearLayout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/commentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/commentLayout">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/subjectText"
@@ -24,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Subject text will be here"
+                android:text="Subject Box"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
                 android:textColor="#009688"
@@ -75,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:paddingHorizontal="4dp"
                 android:text="Review text will be here" />
 
             <EditText
@@ -83,8 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Comment"
-                android:inputType="textPersonName" />
+                android:hint="Comment" />
 
             <Button
                 android:id="@+id/addCommentButton"
