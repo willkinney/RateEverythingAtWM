@@ -75,7 +75,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
                         // specify an adapter and pass in our data model list
                         Collections.sort(dataModelList);
-                        mAdapter = new MyAdapter(dataModelList, context);
+                        mAdapter = new ReviewCardAdapter(dataModelList, context);
                         mRecyclerView.setAdapter(mAdapter);
                     }
                 });

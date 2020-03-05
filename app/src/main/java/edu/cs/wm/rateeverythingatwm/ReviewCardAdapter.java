@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class ReviewCardAdapter extends RecyclerView.Adapter<ReviewCardAdapter.MyViewHolder> {
 
     private List<LocationObject> dataModelList;
     private Context mContext;
@@ -34,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView cardImageView;
         public TextView titleTextView;
-        //        public TextView idTextView;
+        public TextView ratingTextView;
         public TextView subTitleTextView;
         public ImageView hasPhotoImageView;
         public Button showFullReviewButton;
@@ -46,7 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             cardImageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.card_title);
             subTitleTextView = itemView.findViewById(R.id.card_subtitle);
-//            idTextView = itemView.findViewById(R.id.idTextView);
+            ratingTextView = itemView.findViewById(R.id.card_rating);
             hasPhotoImageView = itemView.findViewById(R.id.hasPhotoImageView);
             showFullReviewButton = itemView.findViewById(R.id.showFullReviewButton);
         }
@@ -61,25 +61,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             } else {
                 hasPhotoImageView.setVisibility(View.GONE);
             }
-// Removed code that shows image on card in scrollable list
-//            if (/*dataModel.getHasImage()*/ false) {
-//                final long FIFTY_MEGABYTES = 1024 * 1024 * 50;
-//                reviewImageRef.getBytes(FIFTY_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//                    @Override
-//                    public void onSuccess(byte[] reviewImageBytes) {
-//                        Bitmap bitmap = BitmapFactory.decodeByteArray(reviewImageBytes, 0, reviewImageBytes.length);
-//                        cardImageView.setImageBitmap(bitmap);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        Log.v("DownloadImage", "Error when fetching " + dataModel.getReviewID() + ": " + exception);
-//                        cardImageView.setVisibility(View.GONE);
-//                    }
-//                });
-//            } else {
-//                cardImageView.setVisibility(View.GONE);
-//            }
 
             if (dataModel.getTitle().matches("")) {
                 titleTextView.setText("(no title)");
@@ -92,10 +73,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             } else {
                 subTitleTextView.setText(dataModel.getTitle());
             }
+            ratingTextView.setText(dataModel.getRating() + "/10");
         }
     }
 
-    public MyAdapter(List<LocationObject> modelList, Context context) {
+    public ReviewCardAdapter(List<LocationObject> modelList, Context context) {
         dataModelList = modelList;
         mContext = context;
     }
