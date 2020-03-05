@@ -18,12 +18,14 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:onClick="toNewReview"
+        android:tint="#009688"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.922"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.958"
+        app:rippleColor="#009688"
         app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
 

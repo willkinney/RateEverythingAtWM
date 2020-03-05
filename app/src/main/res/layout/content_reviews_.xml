@@ -26,21 +26,25 @@
         <TextView
             android:id="@+id/card_title"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="335dp"
-            android:layout_height="52dp"
+            android:layout_width="342dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Title will show up here"
+            android:textColor="#009688"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/card_subtitle"
             style="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_width="334dp"
-            android:layout_height="46dp"
+            android:layout_width="342dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Subtitle goes here"
+            android:textColor="#000000"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/card_title"
             app:layout_constraintTop_toBottomOf="@+id/card_title" />
 

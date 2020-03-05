@@ -1,8 +1,7 @@
 package edu.cs.wm.rateeverythingatwm;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
@@ -49,10 +49,16 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     private EditText titleEditText;
     private EditText reviewEditText;
     private SeekBar ratingSeekbar;
-    private boolean hasperms;
 
     private Uri selectedImage = null;
+    private byte[] selectedImageBytes = null;
     private Boolean hasImage = false;
+
+    private static final int REQUEST_GALLERY = 0;
+    private static final int REQUEST_CAMERA = 1;
+    private static int fileType = 0;
+    private static final int UPLOAD_BITMAP = 2;
+    private static final int UPLOAD_URI = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,23 +104,72 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
         ArrayList<String> comments = new ArrayList<String>();
         final String freshReviewID = UUID.randomUUID().toString();
 
-        StorageReference ref = mStorageRef.child(freshReviewID + ".png");
-        if (selectedImage != null) {
-            ref.putFile(selectedImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            imageURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString()
-                            Log.v("ImageUpload", "Successfully uploaded image with URL");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
+        StorageReference ref = null;
+
+        switch (fileType) {
+            case UPLOAD_URI:
+                ref = mStorageRef.child(freshReviewID + ".png");
+                if (selectedImage != null) {
+                    ref.putFile(selectedImage)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Log.v("ImageUpload", "Successfully uploaded image with as URI");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Log.v("ImageUpload", "Failed to upload image");
+                                }
+                            });
+                } else {
+                    Log.v("ImageUpload", "selectedImage was null. Did not upload.");
+                }
+                break;
+
+            case UPLOAD_BITMAP:
+                ref = mStorageRef.child(freshReviewID + ".png");
+                if (selectedImageBytes != null) {
+                    UploadTask uploadTask = ref.putBytes(selectedImageBytes);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             Log.v("ImageUpload", "Failed to upload image");
                         }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Log.v("ImageUpload", "Successfully uploaded image with from bitmap");
+                            // ...
+                        }
                     });
+                } else {
+                    Log.v("ImageUpload", "selectedImage was null. Did not upload.");
+                }
+                break;
+
+
         }
+//        StorageReference ref = mStorageRef.child(freshReviewID + ".png");
+//        if (selectedImage != null) {
+//            ref.putFile(selectedImage)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Log.v("ImageUpload", "Successfully uploaded image with URL");
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception exception) {
+//                            Log.v("ImageUpload", "Failed to upload image");
+//                        }
+//                    });
+//        }
+//        else {
+//            Log.v("ImageUpload", "selectedImage was null. Did not upload.");
+//        }
 
         if (subjectText.matches("")) {
             Toast.makeText(getApplicationContext(), "Subject cannot be empty", Toast.LENGTH_SHORT).show();
@@ -162,14 +217,17 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void takePic(View view) {
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePicture, 0);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage);
+        startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+//        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(takePicture, 0);
     }
 
     public void pickPic(View view) {
         Intent getPicture = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(getPicture, 1);
+        startActivityForResult(getPicture, REQUEST_GALLERY);
     }
 
     public void onClick(View view) {
@@ -179,43 +237,42 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.chooseFromGalleryButton:
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 29837);
                 pickPic(view);
                 break;
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 29837) {
-            // Permission granted.
-            // User refused to grant permission.
-            hasperms = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch (requestCode) {
-            case 0:
+            case REQUEST_CAMERA:
                 if (resultCode == RESULT_OK) {
                     hasImage = true;
+                    Bundle extras = imageReturnedIntent.getExtras();
+                    Bitmap takenPictureAsBitmap = (Bitmap) extras.get("data");
+                    thumbnailImageView.setImageBitmap(takenPictureAsBitmap);
                     selectedImage = imageReturnedIntent.getData();
-                    thumbnailImageView.setImageURI(selectedImage);
+
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    takenPictureAsBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    selectedImageBytes = bytes.toByteArray();
+                    fileType = UPLOAD_BITMAP;
+
                     photoLabelTextView.setVisibility(View.VISIBLE);
                     thumbnailImageView.setVisibility(View.VISIBLE);
                 }
                 break;
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    hasImage = true;
-                    selectedImage = imageReturnedIntent.getData();
-                    thumbnailImageView.setImageURI(selectedImage);
-                    photoLabelTextView.setVisibility(View.VISIBLE);
-                    thumbnailImageView.setVisibility(View.VISIBLE);
-                }
+            case REQUEST_GALLERY:
+                hasImage = true;
+                selectedImage = imageReturnedIntent.getData();
+                thumbnailImageView.setImageURI(selectedImage);
+                photoLabelTextView.setVisibility(View.VISIBLE);
+                thumbnailImageView.setVisibility(View.VISIBLE);
+                fileType = UPLOAD_URI;
                 break;
+            default:
+                Log.v("TakingPhoto", "Unrecognized request code. Doing nothing.");
         }
     }
 
