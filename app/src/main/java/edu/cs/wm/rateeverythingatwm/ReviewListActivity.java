@@ -75,6 +75,7 @@ public class ReviewListActivity extends AppCompatActivity {
     public void toNewReview(View v) {
         Intent intent = new Intent(this, PostReviewActivity.class);
         startActivity(intent);
+        finish();
     }
 }
 
