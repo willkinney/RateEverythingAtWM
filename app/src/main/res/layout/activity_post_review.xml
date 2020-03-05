@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Subject"
-        android:inputType="textPersonName"
         android:maxLength="35" />
 
     <TextView
@@ -32,8 +31,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Title"
-        android:inputType="textPersonName"
-        android:maxLength="30" />
+        android:maxLength="35" />
 
     <TextView
         android:id="@+id/reviewTextView"
