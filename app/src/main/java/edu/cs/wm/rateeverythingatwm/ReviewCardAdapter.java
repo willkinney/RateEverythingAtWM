@@ -19,8 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -52,9 +50,8 @@ public class ReviewCardAdapter extends RecyclerView.Adapter<ReviewCardAdapter.My
         }
 
         public void bindData(final LocationObject dataModel, Context context) {
-//            idTextView.setText(dataModel.getReviewID());
-            StorageReference reviewImageRef = FirebaseStorage.getInstance()
-                    .getReference().child("images/" + dataModel.getReviewID() + ".png");
+//            StorageReference reviewImageRef = FirebaseStorage.getInstance()
+//                    .getReference().child("images/" + dataModel.getReviewID() + ".png");
 
             if (dataModel.getHasImage()) {
                 hasPhotoImageView.setVisibility(View.VISIBLE);
@@ -62,17 +59,8 @@ public class ReviewCardAdapter extends RecyclerView.Adapter<ReviewCardAdapter.My
                 hasPhotoImageView.setVisibility(View.GONE);
             }
 
-            if (dataModel.getTitle().matches("")) {
-                titleTextView.setText("(no title)");
-            } else {
-                titleTextView.setText(dataModel.getSubject());
-            }
-
-            if (dataModel.getSubject().matches("")) {
-                subTitleTextView.setText("(no subject)");
-            } else {
-                subTitleTextView.setText(dataModel.getTitle());
-            }
+            titleTextView.setText(dataModel.getSubject());
+            subTitleTextView.setText(dataModel.getTitle());
             ratingTextView.setText(dataModel.getRating() + "/10");
         }
     }

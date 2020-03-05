@@ -41,7 +41,6 @@ public class SingleReviewActivity extends AppCompatActivity {
     private String ID;
     private ImageView image;
 
-
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private CollectionReference mDocRef;
@@ -72,7 +71,6 @@ public class SingleReviewActivity extends AppCompatActivity {
         comments = wholeReview.getComments();
 
         if (wholeReview.getHasImage()) {
-            // TODO put the picture on the screen
             image.setVisibility(View.VISIBLE);
             StorageReference reviewImageRef = FirebaseStorage.getInstance()
                     .getReference().child("images/" + wholeReview.getReviewID() + ".png");

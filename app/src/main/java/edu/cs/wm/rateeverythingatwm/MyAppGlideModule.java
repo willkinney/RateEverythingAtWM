@@ -1,4 +1,5 @@
 package edu.cs.wm.rateeverythingatwm;
+
 import android.content.Context;
 
 import com.bumptech.glide.Glide;

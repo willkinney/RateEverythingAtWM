@@ -89,7 +89,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is signed in (non-null)
         currentUser = mAuth.getCurrentUser();
     }
 
@@ -151,26 +151,8 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
 
         }
-//        StorageReference ref = mStorageRef.child(freshReviewID + ".png");
-//        if (selectedImage != null) {
-//            ref.putFile(selectedImage)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Log.v("ImageUpload", "Successfully uploaded image with URL");
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception exception) {
-//                            Log.v("ImageUpload", "Failed to upload image");
-//                        }
-//                    });
-//        }
-//        else {
-//            Log.v("ImageUpload", "selectedImage was null. Did not upload.");
-//        }
 
+        // Prevent user from posting reviews with blank fields
         if (subjectText.matches("")) {
             Toast.makeText(getApplicationContext(), "Subject cannot be empty", Toast.LENGTH_SHORT).show();
         }
@@ -201,14 +183,6 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
                         }
                     });
 
-//            Intent postedIntent = new Intent(getApplicationContext(), SingleReviewActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("REVIEW", review);
-//            postedIntent.putExtras(bundle);
-//
-//            startActivity(postedIntent);
-//
-//            finish();
             Intent backToListIntent = new Intent(getApplicationContext(), ReviewListActivity.class);
             Toast.makeText(getApplicationContext(), "Review posted!", Toast.LENGTH_LONG).show();
             startActivity(backToListIntent);
@@ -218,10 +192,7 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
     public void takePic(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage);
         startActivityForResult(takePictureIntent, REQUEST_CAMERA);
-//        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(takePicture, 0);
     }
 
     public void pickPic(View view) {
@@ -261,18 +232,25 @@ public class PostReviewActivity extends AppCompatActivity implements View.OnClic
 
                     photoLabelTextView.setVisibility(View.VISIBLE);
                     thumbnailImageView.setVisibility(View.VISIBLE);
+                } else {
+                    Log.v("AddingPhoto", "Bad result code. Doing nothing.");
                 }
                 break;
             case REQUEST_GALLERY:
-                hasImage = true;
-                selectedImage = imageReturnedIntent.getData();
-                thumbnailImageView.setImageURI(selectedImage);
-                photoLabelTextView.setVisibility(View.VISIBLE);
-                thumbnailImageView.setVisibility(View.VISIBLE);
-                fileType = UPLOAD_URI;
+                if (resultCode == RESULT_OK) {
+                    hasImage = true;
+                    selectedImage = imageReturnedIntent.getData();
+                    thumbnailImageView.setImageURI(selectedImage);
+                    photoLabelTextView.setVisibility(View.VISIBLE);
+                    thumbnailImageView.setVisibility(View.VISIBLE);
+                    fileType = UPLOAD_URI;
+                } else {
+                    Log.v("AddingPhoto", "Bad result code. Doing nothing.");
+                }
                 break;
             default:
-                Log.v("TakingPhoto", "Unrecognized request code. Doing nothing.");
+                Log.v("AddingPhoto", "Unrecognized request code. Doing nothing.");
+                break;
         }
     }
 

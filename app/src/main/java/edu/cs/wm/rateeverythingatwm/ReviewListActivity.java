@@ -19,7 +19,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,8 +32,6 @@ public class ReviewListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     List<LocationObject> dataModelList;
 
-    private LocationObject clickedReview;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +41,6 @@ public class ReviewListActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mDocRef = db.collection("reviews");
         dataModelList = new ArrayList<>();
-        clickedReview = new LocationObject("Example Title", "Example Subject",
-                "Example review text. More text. More and more.",
-                false, 6,
-                "ExampleAuthor", null, Calendar.getInstance().getTime().toString(), "demo-review-id");
 
         final Context context = this;
 
@@ -58,7 +51,6 @@ public class ReviewListActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Log.d("ViewReviews", document.getId() + " => " + document.getData());
                                 LocationObject obj = document.toObject(LocationObject.class);
                                 dataModelList.add(obj);
                             }
@@ -69,11 +61,10 @@ public class ReviewListActivity extends AppCompatActivity {
                         mRecyclerView.setHasFixedSize(true);
 
                         // use a linear layout manager
-
                         mLayoutManager = new LinearLayoutManager(context);
                         mRecyclerView.setLayoutManager(mLayoutManager);
 
-                        // specify an adapter and pass in our data model list
+                        // Specify an adapter and pass in the list of reviews
                         Collections.sort(dataModelList);
                         mAdapter = new ReviewCardAdapter(dataModelList, context);
                         mRecyclerView.setAdapter(mAdapter);
@@ -81,7 +72,7 @@ public class ReviewListActivity extends AppCompatActivity {
                 });
     }
 
-    public void toNewReview(View v){
+    public void toNewReview(View v) {
         Intent intent = new Intent(this, PostReviewActivity.class);
         startActivity(intent);
     }
